@@ -1,2 +1,0 @@
-# AlcoCnt
-Alcohol counter 
