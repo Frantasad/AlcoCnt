@@ -18,6 +18,6 @@ class MapFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val textView: TextView = view.findViewById(R.id.text_map)
-        textView.text = "Drinks"
+        textView.text = "Map"
     }
 }

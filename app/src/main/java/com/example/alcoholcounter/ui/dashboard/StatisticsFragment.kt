@@ -18,6 +18,6 @@ class StatisticsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val textView: TextView = view.findViewById(R.id.text_statistics)
-        textView.text = "sadasdad"
+        textView.text = "Stistics"
     }
 }

@@ -9,13 +9,6 @@
     android:minHeight="?attr/listPreferredItemHeight"
     android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_launcher_background"
-        tools:src="@drawable/ic_launcher_foreground"/>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
