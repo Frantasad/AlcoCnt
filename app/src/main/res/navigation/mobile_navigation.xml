@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_map"
-        android:name="com.example.alcoholcounter.ui.home.MapFragment"
+        android:name="com.example.alcoholcounter.ui.map.MapFragment"
         android:label="@string/title_map"
         tools:layout="@layout/fragment_map"/>
 
     <fragment
         android:id="@+id/navigation_statistics"
-        android:name="com.example.alcoholcounter.ui.dashboard.StatisticsFragment"
+        android:name="com.example.alcoholcounter.ui.statistics.StatisticsFragment"
         android:label="@string/title_statistics"
         tools:layout="@layout/fragment_events"/>
 
     <fragment
         android:id="@+id/navigation_events"
-        android:name="com.example.alcoholcounter.ui.drinks.EventsFragment"
+        android:name="com.example.alcoholcounter.ui.events.EventsFragment"
         android:label="@string/title_events"
         tools:layout="@layout/fragment_statistics" />
 </navigation>

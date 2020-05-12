@@ -1,4 +1,4 @@
-package com.example.alcoholcounter.ui.home
+package com.example.alcoholcounter.ui.map
 
 import android.os.Bundle
 import android.view.LayoutInflater
