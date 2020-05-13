@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="nextPageButton" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:background">@drawable/event_item_style</item>
+    </style>
+
 </resources>

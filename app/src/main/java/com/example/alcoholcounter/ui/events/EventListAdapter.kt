@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alcoholcounter.R
 
-class EventListAdapter(private val users: List<Event>) :
+class EventListAdapter(private val events: List<Event>) :
     RecyclerView.Adapter<EventListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -17,13 +17,12 @@ class EventListAdapter(private val users: List<Event>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(users[position])
+        holder.bind(events[position])
     }
 
     override fun getItemCount(): Int {
-        return users.size
+        return events.size
     }
-
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.eventTitle)
