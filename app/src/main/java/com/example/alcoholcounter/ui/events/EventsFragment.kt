@@ -29,4 +29,13 @@ class EventsFragment : Fragment() {
 
         }
     }
+
+    override fun onEventClick(position: Int) {
+        Log.d(TAG, "omfg")
+        //events.get(position)
+        exitProcess(0)
+
+        /*val context = activity as MainActivity
+        context.replaceFragment(EventFragment())*/
+    }
 }
