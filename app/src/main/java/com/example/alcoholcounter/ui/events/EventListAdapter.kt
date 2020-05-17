@@ -1,54 +1,41 @@
 package com.example.alcoholcounter.ui.events;
-
-import android.content.ContentValues
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alcoholcounter.R
 
+class EventListAdapter(
+    private val events: List<Event>,
+    private val clickListener : OnEventClickListener
+) : RecyclerView.Adapter<EventListAdapter.EventViewHolder>() {
 
-class EventListAdapter(private val events: List<Event>, private val onEventListener : OnEventListener) :
-    RecyclerView.Adapter<EventListAdapter.ViewHolder>() {
-
-    private val _onEventListener : OnEventListener = onEventListener
-    
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.events_list_item, parent, false), _onEventListener
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
+        return EventViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.events_list_item, parent, false))
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(events[position])
+    override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
+        holder.bind(events[position], clickListener)
     }
 
     override fun getItemCount(): Int {
         return events.size
     }
 
-    class ViewHolder(itemView: View, onEventListener : OnEventListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        init {
-            itemView.setOnClickListener(this)
-        }
+    class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        private var title : TextView = itemView.findViewById(R.id.eventTitle)
 
-        private val onEventListener : OnEventListener = onEventListener
-        var title : TextView = itemView.findViewById(R.id.eventTitle)
-        fun bind(event: Event) {
+        fun bind(event: Event, clickListener: OnEventClickListener) {
             title.text = event.title
-        }
-
-        override fun onClick(v: View?) {
-            Log.d(ContentValues.TAG, "omfg")
-            onEventListener.onEventClick(adapterPosition)
+            itemView.setOnClickListener{
+                clickListener.onItemClicked(event)
+            }
         }
     }
 
-    interface OnEventListener {
-        fun onEventClick(position: Int)
+    interface OnEventClickListener {
+        fun onItemClicked(event: Event)
     }
-
-
 }

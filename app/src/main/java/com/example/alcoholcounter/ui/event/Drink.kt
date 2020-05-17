@@ -1,17 +1,15 @@
 package com.example.alcoholcounter.ui.event
 
-import android.icu.util.Currency
+import java.math.BigDecimal
 import java.sql.Time
 
-enum class DrinkType {
-    Beer, Wine, Vodka, Rum, Whiskey, Brandy
-}
 
-data class Drink(val title: String) {
-    //val title: String? = null
-    val type : DrinkType = DrinkType.Beer
-    val amount : Int = 0
-    val lastAdded: ArrayList<Time>? = null
-    val currency: Currency? = null
-    val price = 0.0
+class Drink(var name: String) {
+    var type : String = ""
+    var amount : Int = 0
+    var lastAdded: ArrayList<Time> = ArrayList()
+    var price : BigDecimal = BigDecimal.ZERO
+
+    init {
+    }
 }

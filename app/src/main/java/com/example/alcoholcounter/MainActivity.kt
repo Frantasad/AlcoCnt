@@ -1,13 +1,15 @@
 package com.example.alcoholcounter
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,8 +19,6 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(setOf(
                 R.id.navigation_map, R.id.navigation_statistics, R.id.navigation_events))
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -28,17 +28,16 @@ class MainActivity : AppCompatActivity() {
     fun replaceFragment(fragment: Fragment){
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.nav_host_fragment,fragment)
-        transaction.addToBackStack(null)
+        transaction.replace(R.id.nav_host_fragment, fragment)
+        transaction.addToBackStack(fragment.tag)
         transaction.commit()
     }
 }
 
-// Extension function to replace fragment
 fun AppCompatActivity.replaceFragment(fragment: Fragment){
     val fragmentManager = supportFragmentManager
     val transaction = fragmentManager.beginTransaction()
-    transaction.replace(R.id.nav_host_fragment,fragment)
-    transaction.addToBackStack(null)
+    transaction.replace(R.id.nav_host_fragment, fragment)
+    transaction.addToBackStack(fragment.tag)
     transaction.commit()
 }

@@ -3,7 +3,7 @@ package cz.pv239.seminar2
 import com.example.alcoholcounter.ui.events.Event
 import java.util.*
 
-class EventDb : ArrayList<Event>() {
+class EventDB : ArrayList<Event>() {
 
     val names: List<String>
         get() = map { it.title }.toList()

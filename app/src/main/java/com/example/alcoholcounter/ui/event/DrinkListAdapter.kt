@@ -27,7 +27,7 @@ class DrinkListAdapter(private val drinks: List<Drink>) :
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.drinkTitle)
         fun bind(drink: Drink) {
-            title.text = drink.title
+            title.text = drink.name
         }
     }
 }

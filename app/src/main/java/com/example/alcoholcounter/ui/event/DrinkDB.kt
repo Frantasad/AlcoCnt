@@ -3,10 +3,10 @@ package com.example.alcoholcounter.ui.event
 import com.example.alcoholcounter.ui.event.Drink
 import java.util.*
 
-class DrinkDb : ArrayList<Drink>() {
+class DrinkDB : ArrayList<Drink>() {
 
     val names: List<String>
-        get() = map { it.title }.toList()
+        get() = map { it.name }.toList()
 
     init {
         add(Drink("Baran 12°"))

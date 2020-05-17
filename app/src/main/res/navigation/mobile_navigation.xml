@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_events"
-        android:name="com.example.alcoholcounter.ui.events.EventsFragment"
+        android:name="com.example.alcoholcounter.ui.events.EventListFragment"
         android:label="@string/title_events"
         tools:layout="@layout/fragment_statistics" />
 </navigation>
