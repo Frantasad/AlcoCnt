@@ -13,10 +13,8 @@ import com.example.alcoholcounter.R
 class EventListAdapter(private val events: List<Event>, private val onEventListener : OnEventListener) :
     RecyclerView.Adapter<EventListAdapter.ViewHolder>() {
 
-    val _onEventListener : OnEventListener = onEventListener
-
-
-
+    private val _onEventListener : OnEventListener = onEventListener
+    
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.events_list_item, parent, false), _onEventListener
