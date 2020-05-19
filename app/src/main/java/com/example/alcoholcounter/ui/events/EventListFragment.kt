@@ -10,10 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alcoholcounter.MainActivity
 import com.example.alcoholcounter.R
 import com.example.alcoholcounter.ui.event.EventFragment
-import com.example.alcoholcounter.ui.map.MapFragment
 import cz.pv239.seminar2.EventDB
 import kotlinx.android.synthetic.main.fragment_eventlist.*
-
 
 class EventListFragment : Fragment(), EventListAdapter.OnEventClickListener {
 
@@ -30,7 +28,7 @@ class EventListFragment : Fragment(), EventListAdapter.OnEventClickListener {
     }
 
     override fun onItemClicked(event: Event) {
-        (activity as MainActivity).replaceFragment(EventFragment())
+        (activity as MainActivity).replaceFragment(EventFragment(event))
         Toast.makeText(context, event.title, Toast.LENGTH_LONG).show()
     }
 }

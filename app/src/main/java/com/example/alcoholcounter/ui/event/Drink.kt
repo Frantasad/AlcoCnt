@@ -1,13 +1,14 @@
 package com.example.alcoholcounter.ui.event
 
 import java.math.BigDecimal
-import java.sql.Time
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class Drink(var name: String) {
     var type : String = ""
     var amount : Int = 0
-    var lastAdded: ArrayList<Time> = ArrayList()
+    var lastAdded: ArrayList<Date> = ArrayList()
     var price : BigDecimal = BigDecimal.ZERO
 
     init {

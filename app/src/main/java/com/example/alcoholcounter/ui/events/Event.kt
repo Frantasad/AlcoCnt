@@ -1,18 +1,29 @@
 package com.example.alcoholcounter.ui.events;
 
-import android.R.string
-import android.icu.util.Currency
+import com.example.alcoholcounter.ui.event.Drink
+import java.math.BigDecimal
+import java.util.*
 
+data class Event(var title: String) {
+    var ended: Boolean = false
+    var timeFrom: Date? = null
+    var timeTo: Date? = null
+    var drinks: ArrayList<Drink> = ArrayList()
+    val totalPrice: BigDecimal
+        get(){
+            var total = BigDecimal.ZERO
+            for (drink in drinks) {
+                total += drink.price
+            }
+            return total
+        }
 
-data class Event(val title: String) {
-    // val title: String? = null
-    val ended: Boolean = false
-    val dateFrom: String? = null
-    val dateTo: string? = null
-    val timeFrom: String? = null
-    val timeTo: String? = null
-    val currency: Currency? = null
-    val price = 0.0
+    constructor(title: String, timeFrom: Date, timeTo: Date, drinks: ArrayList<Drink>) : this(title) {
+        this.timeFrom = timeFrom
+        this.timeTo = timeTo
+        this.drinks = drinks
+    }
+
 }
 
 
