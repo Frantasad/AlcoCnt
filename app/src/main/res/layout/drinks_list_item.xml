@@ -4,96 +4,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?attr/listPreferredItemHeight"
-    android:orientation="horizontal"
+    android:orientation="vertical"
+    android:layout_marginBottom="6dp"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd">
+    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+    style="@style/itemNonClickable">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="0.5"
+    <TextView
+        android:id="@+id/drinkTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="4dp"
-        android:orientation="vertical">
+        android:textSize="24sp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_marginTop="4dp"
+        tools:text="Plzeň 12°" />
 
-        <TextView
-            android:id="@+id/drinkTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="26sp"
-            android:textColor="@android:color/holo_blue_dark"
-            android:singleLine="true"
-            android:ellipsize="end"
-            tools:text="Plzeň 12°" />
-
-        <View
-            android:layout_width="30dp"
-            android:layout_height="20dp"
-            android:background="@android:color/holo_blue_dark"/>
-
-        <TextView
-            android:id="@+id/drinkPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@android:color/holo_blue_dark"
-            android:singleLine="true"
-            android:ellipsize="end"
-            tools:text="60 Kč" />
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="4dp"
-        android:layout_weight="0.5"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-
-        <TextView
-            android:id="@+id/drinkCount"
-            android:layout_width="70dp"
-            android:layout_height="60dp"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textAppearance="?attr/textAppearanceListItemSecondary"
-            android:textSize="40sp"
-            app:layout_constraintEnd_toStartOf="@+id/countPlus"
-            tools:layout_editor_absoluteY="2dp"
-            tools:text="10" />
-
-        <Button
-            android:id="@+id/countMinus"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/drink_count_button"
-            android:foreground="@drawable/ic_remove_black_24dp"
-            app:layout_constraintEnd_toStartOf="@+id/drinkCount"
-            tools:layout_editor_absoluteY="16dp" />
-
-        <Button
-            android:id="@+id/countPlus"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/drink_count_button"
-            android:foreground="@drawable/ic_add_black_24dp"
-            tools:layout_editor_absoluteX="146dp"
-            tools:layout_editor_absoluteY="16dp" />
-
-        <TextView
-            android:id="@+id/lastAdded"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_access_time_green_16dp"
-            android:drawablePadding="5dp"
-            android:textAppearance="?attr/textAppearanceListItemSecondary"
-            app:layout_constraintTop_toBottomOf="@+id/drinkCount"
-            tools:layout_editor_absoluteX="76dp"
-            tools:text="21:13" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:orientation="vertical"
+            android:layout_alignParentStart="true" >
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/eventPrize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_attach_money_green_16dp"
+                android:drawablePadding="5dp"
+                android:textAppearance="?attr/textAppearanceListItemSecondary"
+                android:textSize="18sp"
+                tools:text="20 Kč" />
+
+            <TextView
+                android:id="@+id/lastAdded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:drawableStart="@drawable/ic_access_time_green_16dp"
+                android:drawablePadding="5dp"
+                android:textAppearance="?attr/textAppearanceListItemSecondary"
+                tools:text="21:13" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentEnd="true" >
+
+            <ImageButton
+                android:id="@+id/countMinus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/ic_add_box_black_24dp" />
+
+            <TextView
+                android:id="@+id/drinkCount"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:textSize="35sp"
+                android:text="100" />
+
+            <ImageButton
+                android:id="@+id/countPlus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/ic_indeterminate_check_box_black_24dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

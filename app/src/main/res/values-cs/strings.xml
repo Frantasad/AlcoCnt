@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Alcohol Counter</string>
-    <string name="title_map">Map</string>
-    <string name="title_statistics">Statistics</string>
-    <string name="title_events">Events</string>
+    <string name="app_name">Alkoholová počítačka</string>
+    <string name="title_map">Mapa</string>
+    <string name="title_statistics">Statistiky</string>
+    <string name="title_events">Události</string>
 </resources>

@@ -14,5 +14,7 @@ class DrinkDB : ArrayList<Drink>() {
         add(Drink("Chotěboř 12°"))
         add(Drink("Beskydské Hořké 15°"))
         add(Drink("Kout 10°"))
+        add(Drink("Kout 10°"))
+        add(Drink("Kout 10°"))
     }
 }

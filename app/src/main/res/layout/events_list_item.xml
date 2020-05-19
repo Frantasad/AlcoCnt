@@ -8,7 +8,7 @@
     android:layout_marginBottom="6dp"
     android:layout_marginLeft="6dp"
     android:layout_marginRight="6dp"
-    style="@style/nextPageButton"
+    style="@style/itemClickable"
     android:clickable="true"
     android:focusable="true">
 

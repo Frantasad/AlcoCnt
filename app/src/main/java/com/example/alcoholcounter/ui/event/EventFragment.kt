@@ -24,13 +24,13 @@ class EventFragment(val event : Event) : Fragment() {
         drinkListRecycler.adapter = DrinkListAdapter(event.drinks)
         eventTitle.text = event.title
 
-        val locale = Locale("cs", "CZ")
+        val locale = Locale.getDefault()
         val currency = Currency.getInstance(locale)
 
-        val dateFormat = DateFormat.getDateInstance(DateFormat.LONG, locale);
+        val dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
 
         if(event.timeFrom != null){
-            eventTime.text = dateFormat.format(event.timeFrom!!)
+            eventTime.text = String.format("%s - %s", dateFormat.format(event.timeFrom!!), dateFormat.format(event.timeTo!!))
         }
 
         eventPrice.text = String.format("%s %s", event.totalPrice.toString(), currency.symbol) //event.totalPrice.toString()
