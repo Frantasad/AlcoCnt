@@ -7,8 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alcoholcounter.R
 
+
 class EventListAdapter(
-    private val events: List<Event>,
+    private val events: ArrayList<Event>,
     private val clickListener : OnEventClickListener
 ) : RecyclerView.Adapter<EventListAdapter.EventViewHolder>() {
 

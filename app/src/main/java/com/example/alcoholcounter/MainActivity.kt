@@ -1,6 +1,7 @@
 package com.example.alcoholcounter
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -12,12 +13,15 @@ import com.example.alcoholcounter.ui.events.EventListFragment
 import com.example.alcoholcounter.ui.map.MapFragment
 import com.example.alcoholcounter.ui.statistics.StatisticsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import cz.pv239.seminar2.EventDB
 
 class MainActivity : AppCompatActivity() {
+    val dataHandler : DataHandler = DataHandler(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        dataHandler.LoadEvents()
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -50,4 +54,6 @@ class MainActivity : AppCompatActivity() {
         transaction.addToBackStack(fragment.tag)
         transaction.commit()
     }
+
+
 }
