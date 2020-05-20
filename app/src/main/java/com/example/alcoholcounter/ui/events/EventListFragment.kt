@@ -14,6 +14,7 @@ import com.example.alcoholcounter.ui.event.EventFragment
 import cz.pv239.seminar2.EventDB
 import kotlinx.android.synthetic.main.fragment_eventlist.*
 import android.util.Log
+import com.google.android.material.snackbar.Snackbar
 
 class EventListFragment : Fragment(), EventListAdapter.OnEventClickListener {
 
@@ -25,13 +26,20 @@ class EventListFragment : Fragment(), EventListAdapter.OnEventClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        eventsListRecycler.adapter = EventListAdapter((requireActivity() as MainActivity).dataHandler.events, this)
+        val eventListAdapter = EventListAdapter((requireActivity() as MainActivity).dataHandler.events, this)
+        eventsListRecycler.adapter = eventListAdapter
         eventsListRecycler.layoutManager = LinearLayoutManager(context)
+
+        fab.setOnClickListener {
+            val data = (requireActivity() as MainActivity).dataHandler
+            data.events.addAll(EventDB())
+            eventListAdapter.notifyDataSetChanged();
+            data.saveEvents()
+        }
     }
 
     override fun onItemClicked(event: Event) {
         (activity as MainActivity).replaceFragment(EventFragment(event))
-        Toast.makeText(context, event.title, Toast.LENGTH_LONG).show()
     }
 
 }
