@@ -57,10 +57,10 @@ class DataHandler(private val context: Context){
     fun LoadEvents() {
         val fileData = ReadFromFile(_fileName)
         //events = ArrayList(Gson().fromJson(fileData, Array<Event>::class.java).toList())
-        if (fileData == null) {
+        if (fileData == null || fileData == "") {
             events = ArrayList<Event>()
         } else {
-            //events = ArrayList(Gson().fromJson(fileData, Array<Event>::class.java).toList())
+            events = ArrayList(Gson().fromJson(fileData, Array<Event>::class.java).toList())
         }
     }
 
