@@ -13,7 +13,6 @@ import com.example.alcoholcounter.ui.events.EventListFragment
 import com.example.alcoholcounter.ui.map.MapFragment
 import com.example.alcoholcounter.ui.statistics.StatisticsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import cz.pv239.seminar2.EventDB
 
 class MainActivity : AppCompatActivity() {
     val dataHandler : DataHandler = DataHandler(this)
@@ -22,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Log.e("omregergfg", "omfg")
-        dataHandler.LoadEvents()
+        dataHandler.loadEvents()
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -48,6 +47,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        dataHandler.saveEvents()
+    }
+
     fun replaceFragment(fragment: Fragment){
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
@@ -55,11 +59,4 @@ class MainActivity : AppCompatActivity() {
         transaction.addToBackStack(fragment.tag)
         transaction.commit()
     }
-<<<<<<< HEAD
 }
-
-=======
-
-
-}
->>>>>>> 3f618b49fe16ae58a3c75fab8ee538952e360efb

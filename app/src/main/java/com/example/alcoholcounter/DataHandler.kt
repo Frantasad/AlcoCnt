@@ -2,16 +2,16 @@ package com.example.alcoholcounter
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.example.alcoholcounter.ui.events.Event
 import com.google.gson.Gson
 import java.io.*
-
 
 class DataHandler(private val context: Context){
     private val _fileName : String = "events.txt"
     var events : ArrayList<Event> = ArrayList()
 
-    private fun WriteToFile(fileName: String, data: String) {
+    private fun writeToFile(fileName: String, data: String) {
         try {
             val outputStreamWriter =
                 OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_PRIVATE))
@@ -22,50 +22,46 @@ class DataHandler(private val context: Context){
         }
     }
 
-
-
-    private fun ReadFromFile(fileName: String?): String? {
-        val file = context.getFileStreamPath(_fileName)
+    private fun readFromFile(fileName: String?): String? {
+        val file = context.getFileStreamPath(fileName)
         if (file == null || !file.exists()) {
             return null
         }
 
-        var data: String = ""
+        val data: String
         try {
-            val inputStream: InputStream = context.openFileInput(_fileName)
+            val inputStream: InputStream = context.openFileInput(fileName)
 
-            if (inputStream != null) {
-                val inputStreamReader = InputStreamReader(inputStream)
-                val bufferedReader = BufferedReader(inputStreamReader)
-                var line: String? = ""
-                val stringBuilder = java.lang.StringBuilder()
-                while (bufferedReader.readLine().also { line = it } != null) {
-                    stringBuilder.append(line)
-                }
-
-                inputStream.close()
-                data = stringBuilder.toString()
+            val inputStreamReader = InputStreamReader(inputStream)
+            val bufferedReader = BufferedReader(inputStreamReader)
+            var line: String?
+            val stringBuilder = java.lang.StringBuilder()
+            while (bufferedReader.readLine().also { line = it } != null) {
+                stringBuilder.append(line)
             }
+
+            inputStream.close()
+            data = stringBuilder.toString()
         } catch (e: IOException) {
             Log.e("FileToJson", "Can not read file: $e")
+            Toast.makeText(context, "Unable to save data", Toast.LENGTH_LONG).show()
             return null
         }
 
         return data
     }
 
-    fun LoadEvents() {
-        val fileData = ReadFromFile(_fileName)
-        //events = ArrayList(Gson().fromJson(fileData, Array<Event>::class.java).toList())
-        if (fileData == null || fileData == "") {
-            events = ArrayList<Event>()
+    fun loadEvents() {
+        val fileData = readFromFile(_fileName)
+        events = if (fileData == null || fileData == "") {
+            ArrayList()
         } else {
-            events = ArrayList(Gson().fromJson(fileData, Array<Event>::class.java).toList())
+            ArrayList(Gson().fromJson(fileData, Array<Event>::class.java).toList())
         }
     }
 
-    fun SaveEvents() {
-        WriteToFile(_fileName, Gson().toJson(events))
+    fun saveEvents() {
+        writeToFile(_fileName, Gson().toJson(events))
     }
 
 }
