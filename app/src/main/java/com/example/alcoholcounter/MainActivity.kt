@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Log.e("omregergfg", "omfg")
         dataHandler.LoadEvents()
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
