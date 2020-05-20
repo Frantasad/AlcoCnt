@@ -65,11 +65,13 @@
 
             <ImageButton
                 android:id="@+id/countMinus"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="8dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="@drawable/ic_add_box_black_24dp" />
+                android:foreground="@drawable/ic_remove_white_24dp"
+                style="@style/imageButtonStyle" />
 
             <TextView
                 android:id="@+id/drinkCount"
@@ -77,7 +79,7 @@
                 android:layout_height="50dp"
                 android:textAlignment="center"
                 android:gravity="center"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:textSize="35sp"
@@ -85,11 +87,13 @@
 
             <ImageButton
                 android:id="@+id/countPlus"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="8dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="@drawable/ic_indeterminate_check_box_black_24dp"/>
+                android:foreground="@drawable/ic_add_white_24dp"
+                style="@style/imageButtonStyle"/>
 
         </LinearLayout>
 

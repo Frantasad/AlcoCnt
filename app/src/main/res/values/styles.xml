@@ -16,5 +16,9 @@
         <item name="android:background">@drawable/drink_item_style</item>
     </style>
 
+    <style name="imageButtonStyle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:background">@drawable/image_button_style</item>
+    </style>
+
 
 </resources>
