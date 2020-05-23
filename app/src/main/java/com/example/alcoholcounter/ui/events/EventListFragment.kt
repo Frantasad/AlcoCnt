@@ -38,6 +38,11 @@ class EventListFragment : Fragment(), EventListAdapter.OnEventClickListener {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        //outState.putInt(STATE_CLICKS, clicks)
+    }
+
     override fun onItemClicked(event: Event) {
         (activity as MainActivity).replaceFragment(EventFragment(event))
     }
