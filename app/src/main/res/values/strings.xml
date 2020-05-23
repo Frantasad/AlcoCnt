@@ -3,4 +3,6 @@
     <string name="title_map">Map</string>
     <string name="title_statistics">Statistics</string>
     <string name="title_events">Events</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
 </resources>

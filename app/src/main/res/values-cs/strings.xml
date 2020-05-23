@@ -3,4 +3,6 @@
     <string name="title_map">Mapa</string>
     <string name="title_statistics">Statistiky</string>
     <string name="title_events">Události</string>
+    <string name="delete">Smazat</string>
+    <string name="edit">Upravit</string>
 </resources>
