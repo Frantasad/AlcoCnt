@@ -31,8 +31,8 @@ class EventListFragment : Fragment(), EventListAdapter.OnEventClickListener {
 
         fab.setOnClickListener {
             val data = MainApp.dataHandler!!
-            data.events.add(Event("Kalba", Calendar.getInstance().time, Calendar.getInstance().time, arrayListOf(
-                Drink("Baran 12°")
+            data.events.add(Event("NOVE", Calendar.getInstance().time, Calendar.getInstance().time, arrayListOf(
+                Drink("Test 12°")
             )))
             (eventsListRecycler.adapter as EventListAdapter).notifyDataSetChanged();
         }
