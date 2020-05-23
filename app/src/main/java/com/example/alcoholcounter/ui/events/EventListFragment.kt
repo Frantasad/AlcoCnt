@@ -14,11 +14,14 @@ import com.example.alcoholcounter.ui.event.EventFragment
 import cz.pv239.seminar2.EventDB
 import kotlinx.android.synthetic.main.fragment_eventlist.*
 import android.util.Log
+import com.example.alcoholcounter.MainApp
+import com.example.alcoholcounter.ui.event.Drink
 import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 class EventListFragment : Fragment(), EventListAdapter.OnEventClickListener {
 
-    //private var adapter: EventListAdapter = EventListAdapter(EventDB(), this)
+    private var eventListAdapter: EventListAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_eventlist, container, false)
@@ -26,16 +29,31 @@ class EventListFragment : Fragment(), EventListAdapter.OnEventClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val eventListAdapter = EventListAdapter((requireActivity() as MainActivity).dataHandler.events, this)
+        eventListAdapter = EventListAdapter(MainApp.dataHandler!!.events, this)
         eventsListRecycler.adapter = eventListAdapter
         eventsListRecycler.layoutManager = LinearLayoutManager(context)
+        eventListAdapter!!.notifyDataSetChanged()
 
         fab.setOnClickListener {
-            val data = (requireActivity() as MainActivity).dataHandler
-            data.events.addAll(EventDB())
-            eventListAdapter.notifyDataSetChanged();
-            data.saveEvents()
+            val data = MainApp.dataHandler!!
+            data.events.add(Event("Kalba", Calendar.getInstance().time, Calendar.getInstance().time, arrayListOf(
+                Drink("Baran 12°")
+            )))
+            eventListAdapter?.notifyDataSetChanged();
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val data = MainApp.dataHandler!!
+        data.loadEvents()
+        eventListAdapter!!.notifyDataSetChanged()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val data = MainApp.dataHandler!!
+        data.saveEvents()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
