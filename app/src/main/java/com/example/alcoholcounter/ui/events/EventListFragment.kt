@@ -1,54 +1,61 @@
 package com.example.alcoholcounter.ui.events
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alcoholcounter.DataHandler
 import com.example.alcoholcounter.MainActivity
 import com.example.alcoholcounter.R
 import com.example.alcoholcounter.ui.event.EventFragment
-import cz.pv239.seminar2.EventDB
 import kotlinx.android.synthetic.main.fragment_eventlist.*
-import android.util.Log
 import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.ui.event.Drink
-import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 class EventListFragment : Fragment(), EventListAdapter.OnEventClickListener {
+
+    private lateinit var events : ArrayList<Event>
+    private lateinit var eventListAdapter : EventListAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_eventlist, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        eventsListRecycler.adapter = EventListAdapter(MainApp.dataHandler!!.events, this)
-        eventsListRecycler.layoutManager = LinearLayoutManager(context)
+        events = MainApp.dataHandler.events
+        eventListAdapter = EventListAdapter(events, this)
+        eventsListRecycler.adapter = eventListAdapter
+        val linearLayoutManager = LinearLayoutManager(context)
+        linearLayoutManager.reverseLayout = true
+        linearLayoutManager.stackFromEnd = true
+        eventsListRecycler.layoutManager = linearLayoutManager
 
         fab.setOnClickListener {
-            val data = MainApp.dataHandler!!
-            data.events.add(Event("NOVE", Calendar.getInstance().time, Calendar.getInstance().time, arrayListOf(
+            events.add(Event("NOVE", Calendar.getInstance().time, Calendar.getInstance().time, arrayListOf(
                 Drink("Test 12°")
             )))
-            (eventsListRecycler.adapter as EventListAdapter).notifyDataSetChanged();
+            MainApp.dataHandler.events = events
+            eventListAdapter.notifyDataSetChanged();
+            eventsListRecycler.smoothScrollToPosition(events.size - 1);
         }
     }
 
     override fun onStart() {
         super.onStart()
-        val data = MainApp.dataHandler!!
-        data.loadEvents()
-        (eventsListRecycler.adapter as EventListAdapter).notifyDataSetChanged();
+        events = MainApp.dataHandler.events
+        MainApp.dataHandler.loadEvents()
+        eventListAdapter.notifyDataSetChanged();
     }
 
     override fun onStop() {
         super.onStop()
-        val data = MainApp.dataHandler!!
-        data.saveEvents()
+        MainApp.dataHandler.events = events
+        MainApp.dataHandler.saveEvents()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

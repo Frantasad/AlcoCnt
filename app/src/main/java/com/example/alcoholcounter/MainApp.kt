@@ -5,11 +5,8 @@ import android.content.Context
 
 class MainApp : Application() {
     companion object {
-        var appContext: Context? = null
-            private set
-
-        var dataHandler : DataHandler? = null
-            private set
+        lateinit var appContext: Context
+        lateinit var dataHandler : DataHandler
     }
 
     override fun onCreate() {
