@@ -16,5 +16,6 @@ class MainApp : Application() {
         super.onCreate()
         appContext = applicationContext
         dataHandler = DataHandler(applicationContext)
+        dataHandler!!.loadEvents()
     }
 }

@@ -20,26 +20,21 @@ import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 class EventListFragment : Fragment(), EventListAdapter.OnEventClickListener {
-
-    private var eventListAdapter: EventListAdapter? = null
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_eventlist, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        eventListAdapter = EventListAdapter(MainApp.dataHandler!!.events, this)
-        eventsListRecycler.adapter = eventListAdapter
+        eventsListRecycler.adapter = EventListAdapter(MainApp.dataHandler!!.events, this)
         eventsListRecycler.layoutManager = LinearLayoutManager(context)
-        eventListAdapter!!.notifyDataSetChanged()
 
         fab.setOnClickListener {
             val data = MainApp.dataHandler!!
             data.events.add(Event("Kalba", Calendar.getInstance().time, Calendar.getInstance().time, arrayListOf(
                 Drink("Baran 12°")
             )))
-            eventListAdapter?.notifyDataSetChanged();
+            (eventsListRecycler.adapter as EventListAdapter).notifyDataSetChanged();
         }
     }
 
@@ -47,7 +42,7 @@ class EventListFragment : Fragment(), EventListAdapter.OnEventClickListener {
         super.onStart()
         val data = MainApp.dataHandler!!
         data.loadEvents()
-        eventListAdapter!!.notifyDataSetChanged()
+        (eventsListRecycler.adapter as EventListAdapter).notifyDataSetChanged();
     }
 
     override fun onStop() {
