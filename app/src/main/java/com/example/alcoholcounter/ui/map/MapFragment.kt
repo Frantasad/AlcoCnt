@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -67,7 +68,7 @@ class MapFragment : Fragment(),
     }
 
     private fun locationPermissionGranted() : Boolean {
-        return ContextCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        return ContextCompat.checkSelfPermission(MainApp.appContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun checkUserLocationPermission() {
@@ -103,7 +104,7 @@ class MapFragment : Fragment(),
 
     @Synchronized
     private fun buildGoogleApiClient() {
-        _googleApiClient = GoogleApiClient.Builder(this.requireContext())
+        _googleApiClient = GoogleApiClient.Builder(MainApp.appContext)
             .addConnectionCallbacks(this)
             .addOnConnectionFailedListener(this)
             .addApi(LocationServices.API)
@@ -149,7 +150,7 @@ class MapFragment : Fragment(),
         _map?.moveCamera(CameraUpdateFactory.newLatLng(coordinates))
         //_map?.animateCamera(CameraUpdateFactory.zoomBy(_defaultZoom))
 
-        if (_googleApiClient != null) {
+        if (_googleApiClient != null && _googleApiClient!!.isConnected) {
             LocationServices.FusedLocationApi.removeLocationUpdates(_googleApiClient, this)
         }
     }
