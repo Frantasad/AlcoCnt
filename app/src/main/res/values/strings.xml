@@ -5,4 +5,6 @@
     <string name="title_events">Events</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
+    <string name="current_location">Current location</string>
+    <string name="location_access_denied">Access to location denied</string>
 </resources>

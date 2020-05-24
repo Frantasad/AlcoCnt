@@ -1,10 +1,8 @@
 package com.example.alcoholcounter.ui.map
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,7 +27,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.tasks.Task
 import kotlinx.android.synthetic.main.fragment_map.*
 
 
@@ -42,12 +39,10 @@ class MapFragment : Fragment(),
     private var _map : GoogleMap? = null
     private var _googleApiClient: GoogleApiClient? = null
     private var _locationRequest : LocationRequest? = null
-    private var _lastLocation : Location? = null
-    private var _currentUserLocationMarker : Marker? = null
     private val _requestUserLocationCode : Int = 666
+
+    private var _eventMarkers: ArrayList<MarkerOptions> = ArrayList()
     private val _defaultZoom : Float = 16F
-    private lateinit var _fusedLocationProviderClient: FusedLocationProviderClient
-    private lateinit var eventMarkers: ArrayList<MarkerOptions>
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -60,17 +55,11 @@ class MapFragment : Fragment(),
             checkUserLocationPermission()
         }
 
-        _fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
-
         loadEventMarkers()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_map, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun locationPermissionGranted() : Boolean {
@@ -79,11 +68,7 @@ class MapFragment : Fragment(),
 
     private fun checkUserLocationPermission() {
         if (!locationPermissionGranted()) {
-            ActivityCompat.requestPermissions(
-                this.requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                _requestUserLocationCode
-            )
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), _requestUserLocationCode)
         }
     }
 
@@ -95,17 +80,27 @@ class MapFragment : Fragment(),
         when (requestCode) {
             _requestUserLocationCode -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && locationPermissionGranted()) {
-                    if (_googleApiClient == null) {
-                        buildGoogleApiClient()
-                    }
-                    _map?.isMyLocationEnabled = true
-                }
-                else {
-                    TODO()
-                    //Toast.makeText(this.requireContext(), "Permission denied...", Toast.LENGTH_SHORT).show()
+                    mapInteractionInit()
+                } else {
+                    Toast.makeText(this.requireContext(), R.string.location_access_denied, Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+
+    override fun onMapReady(map: GoogleMap?) {
+        map?.let { _map = it }
+
+        if (locationPermissionGranted()) {
+            mapInteractionInit()
+        }
+    }
+
+    private fun mapInteractionInit() {
+        buildGoogleApiClient()
+        _map!!.isMyLocationEnabled = true
+        MainApp.getCurrentLocation() { location -> setMapOnLocation(location, _defaultZoom) }
+        showEventMarkers()
     }
 
     @Synchronized
@@ -117,21 +112,6 @@ class MapFragment : Fragment(),
             .build()
 
         _googleApiClient?.connect()
-    }
-
-    override fun onMapReady(map: GoogleMap?) {
-        map?.let { _map = it }
-
-        if (locationPermissionGranted()) {
-            buildGoogleApiClient()
-            _map!!.isMyLocationEnabled = true
-
-            MainApp.getCurrentLocation() { location ->
-                setMapOnLocation(location, _defaultZoom)
-            }
-
-            showEventMarkers()
-        }
     }
 
     override fun onConnected(p0: Bundle?) {
@@ -146,20 +126,8 @@ class MapFragment : Fragment(),
         }
     }
 
-    override fun onLocationChanged(location: Location?) {
-        _lastLocation = location
-        _currentUserLocationMarker?.remove()
-
-        val coordinates = LatLng(location!!.latitude, location!!.longitude)
-        val markerOptions = MarkerOptions()
-        markerOptions.position(coordinates)
-        markerOptions.title("Current location")
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-
-        _currentUserLocationMarker = _map?.addMarker(markerOptions)
-
-        _map?.moveCamera(CameraUpdateFactory.newLatLng(coordinates))
-        //_map?.animateCamera(CameraUpdateFactory.zoomBy(_defaultZoom))
+    override fun onLocationChanged(location: Location) {
+        setMapOnLocation(location, _defaultZoom)
 
         if (_googleApiClient != null && _googleApiClient!!.isConnected) {
             LocationServices.FusedLocationApi.removeLocationUpdates(_googleApiClient, this)
@@ -172,20 +140,21 @@ class MapFragment : Fragment(),
     }
 
     private fun loadEventMarkers() {
-        eventMarkers = ArrayList<MarkerOptions>()
         for (event in MainApp.dataHandler.events) {
             if (event.location != null) {
                 val markerOptions = MarkerOptions()
                 markerOptions.position(LatLng(event.location!!.latitude, event.location!!.longitude))
                 markerOptions.title(event.title)
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                eventMarkers.add(markerOptions)
+                // pokud je event zrovna spusteny:
+                //markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+
+                _eventMarkers.add(markerOptions)
             }
         }
     }
 
     private fun showEventMarkers() {
-        for (eventMarker in eventMarkers) {
+        for (eventMarker in _eventMarkers) {
             _map?.addMarker(eventMarker)
         }
     }

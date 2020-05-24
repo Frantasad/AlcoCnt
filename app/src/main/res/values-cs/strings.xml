@@ -5,4 +5,6 @@
     <string name="title_events">Události</string>
     <string name="delete">Smazat</string>
     <string name="edit">Upravit</string>
+    <string name="current_location">Aktuální poloha</string>
+    <string name="location_access_denied">Přístup k poloze zamítnut</string>
 </resources>
