@@ -62,7 +62,7 @@ class MapFragment : Fragment(),
 
         _fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
 
-        loadEventsMarkers()
+        loadEventMarkers()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -130,7 +130,7 @@ class MapFragment : Fragment(),
                 setMapOnLocation(location, _defaultZoom)
             }
 
-            showEventsMarkers()
+            showEventMarkers()
         }
     }
 
@@ -171,7 +171,7 @@ class MapFragment : Fragment(),
         _map?.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, zoom))
     }
 
-    private fun loadEventsMarkers() {
+    private fun loadEventMarkers() {
         eventMarkers = ArrayList<MarkerOptions>()
         for (event in MainApp.dataHandler.events) {
             if (event.location != null) {
@@ -184,7 +184,7 @@ class MapFragment : Fragment(),
         }
     }
 
-    private fun showEventsMarkers() {
+    private fun showEventMarkers() {
         for (eventMarker in eventMarkers) {
             _map?.addMarker(eventMarker)
         }

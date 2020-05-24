@@ -26,5 +26,5 @@ class MainApp : Application() {
         dataHandler!!.loadEvents()
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(appContext)
     }
-    
+
 }
