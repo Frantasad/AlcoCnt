@@ -47,6 +47,7 @@ class MapFragment : Fragment(),
     private val _requestUserLocationCode : Int = 666
     private val _defaultZoom : Float = 16F
     private lateinit var _fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var eventMarkers: ArrayList<MarkerOptions>
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -60,6 +61,8 @@ class MapFragment : Fragment(),
         }
 
         _fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
+
+        loadEventsMarkers()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -123,9 +126,11 @@ class MapFragment : Fragment(),
             buildGoogleApiClient()
             _map!!.isMyLocationEnabled = true
 
-            LocationHelper().getLocation { location ->
+            MainApp.getCurrentLocation() { location ->
                 setMapOnLocation(location, _defaultZoom)
             }
+
+            showEventsMarkers()
         }
     }
 
@@ -166,14 +171,22 @@ class MapFragment : Fragment(),
         _map?.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, zoom))
     }
 
-    inner class LocationHelper {
-        private lateinit var l : Location
+    private fun loadEventsMarkers() {
+        eventMarkers = ArrayList<MarkerOptions>()
+        for (event in MainApp.dataHandler.events) {
+            if (event.location != null) {
+                val markerOptions = MarkerOptions()
+                markerOptions.position(LatLng(event.location!!.latitude, event.location!!.longitude))
+                markerOptions.title(event.title)
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                eventMarkers.add(markerOptions)
+            }
+        }
+    }
 
-        fun getLocation(callback: (Location) -> Unit) {
-            _fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
-                    this.l = location!!
-                    callback.invoke(this.l)
-                }
+    private fun showEventsMarkers() {
+        for (eventMarker in eventMarkers) {
+            _map?.addMarker(eventMarker)
         }
     }
 
