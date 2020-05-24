@@ -145,9 +145,9 @@ class MapFragment : Fragment(),
                 val markerOptions = MarkerOptions()
                 markerOptions.position(LatLng(event.location!!.latitude, event.location!!.longitude))
                 markerOptions.title(event.title)
-                // pokud je event zrovna spusteny:
-                //markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-
+                if (!event.ended) {
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                }
                 _eventMarkers.add(markerOptions)
             }
         }
