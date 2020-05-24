@@ -1,5 +1,6 @@
 package com.example.alcoholcounter.ui.events;
 
+import android.location.Location
 import com.example.alcoholcounter.ui.event.Drink
 import java.math.BigDecimal
 import java.util.*
@@ -9,6 +10,7 @@ data class Event(var title: String) {
     var timeFrom: Date? = null
     var timeTo: Date? = null
     var drinks: ArrayList<Drink> = ArrayList()
+    var location: Location? = null
     val totalPrice: BigDecimal
         get(){
             var total = BigDecimal.ZERO

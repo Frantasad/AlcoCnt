@@ -1,8 +1,10 @@
 package com.example.alcoholcounter.ui.map
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -27,6 +29,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.tasks.Task
 import kotlinx.android.synthetic.main.fragment_map.*
 
 
@@ -119,7 +122,10 @@ class MapFragment : Fragment(),
         if (locationPermissionGranted()) {
             buildGoogleApiClient()
             _map!!.isMyLocationEnabled = true
-            setMapOnCurrentLocation(_defaultZoom)
+
+            LocationHelper().getLocation { location ->
+                setMapOnLocation(location, _defaultZoom)
+            }
         }
     }
 
@@ -155,26 +161,20 @@ class MapFragment : Fragment(),
         }
     }
 
-    private fun setMapOnCurrentLocation(zoom : Float) {
-        _fusedLocationProviderClient.lastLocation.addOnCompleteListener(this.requireActivity()) { task ->
-            var location: Location? = task.result
-
-            if (location != null) {
-                val coordinates = LatLng(location!!.latitude, location!!.longitude)
-                moveCamera(coordinates, _defaultZoom)
-                /*_map?.moveCamera(CameraUpdateFactory.newLatLng(coordinates))
-                _map?.animateCamera(CameraUpdateFactory.zoomBy(zoom))*/
-
-            }
-        }
-    }
-
-    private fun moveCamera(coordinates: LatLng, zoom: Float) {
+    private fun setMapOnLocation(location: Location, zoom: Float) {
+        val coordinates = LatLng(location!!.latitude, location!!.longitude)
         _map?.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, zoom))
     }
 
-    fun getCurrentLocation() : Location? {
-        TODO("async sranda")
+    inner class LocationHelper {
+        private lateinit var l : Location
+
+        fun getLocation(callback: (Location) -> Unit) {
+            _fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
+                    this.l = location!!
+                    callback.invoke(this.l)
+                }
+        }
     }
 
     override fun onConnectionSuspended(p0: Int) {
