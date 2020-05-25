@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.example.alcoholcounter.ui.event.EventEditFragment
 import com.example.alcoholcounter.ui.events.EventListFragment
 import com.example.alcoholcounter.ui.map.MapFragment
 import com.example.alcoholcounter.ui.statistics.StatisticsFragment
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         if (selectedFragment == null) {
             selectedFragment = when (item.itemId) {
                 R.id.navigation_map -> MapFragment()
-                R.id.navigation_statistics -> StatisticsFragment()
+                R.id.navigation_statistics -> EventEditFragment()
                 R.id.navigation_events -> EventListFragment()
                 else -> EventListFragment()
             }
