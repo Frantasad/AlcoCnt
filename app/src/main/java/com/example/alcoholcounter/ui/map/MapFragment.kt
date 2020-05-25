@@ -135,7 +135,7 @@ class MapFragment : Fragment(),
     }
 
     private fun setMapOnLocation(location: Location, zoom: Float) {
-        val coordinates = LatLng(location!!.latitude, location!!.longitude)
+        val coordinates = LatLng(location.latitude, location.longitude)
         _map?.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, zoom))
     }
 

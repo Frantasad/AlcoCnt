@@ -7,4 +7,11 @@
     <string name="edit">Edit</string>
     <string name="current_location">Current location</string>
     <string name="location_access_denied">Access to location denied</string>
+    <string name="edit_event">Edit event</string>
+    <string name="name">Name</string>
+    <string name="enter_name">Enter name</string>
+    <string name="start">Start</string>
+    <string name="pick_time">Pick Time</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="end">End</string>
 </resources>

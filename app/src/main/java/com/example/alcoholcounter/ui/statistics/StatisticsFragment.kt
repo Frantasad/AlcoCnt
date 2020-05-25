@@ -23,7 +23,7 @@ class StatisticsFragment : Fragment() {
         val textView: TextView = view.findViewById(R.id.text_statistics)
         textView.text = "Stistics"
         button.setOnClickListener{
-            val data = MainApp.dataHandler!!
+            val data = MainApp.dataHandler
             data.events.clear()
             data.events.addAll(EventDB())
             data.saveEvents()

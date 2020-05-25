@@ -7,4 +7,11 @@
     <string name="edit">Upravit</string>
     <string name="current_location">Aktuální poloha</string>
     <string name="location_access_denied">Přístup k poloze zamítnut</string>
+    <string name="edit_event">Upravit událost</string>
+    <string name="name">Název</string>
+    <string name="enter_name">Zadej název</string>
+    <string name="start">Začátek</string>
+    <string name="pick_time">Vybrat čas</string>
+    <string name="pick_date">Vybrat datum</string>
+    <string name="end">Konec</string>
 </resources>

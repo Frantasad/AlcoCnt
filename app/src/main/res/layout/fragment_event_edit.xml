@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/listPreferredItemHeight"
+        android:orientation="vertical"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:background="@android:color/background_light">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:gravity="center"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="32sp"
+            android:text="@string/edit_event" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_big_title"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="15dp"
+            android:textSize="24sp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textAppearance="?attr/textAppearanceListItemSecondary"
+            android:labelFor="@id/nameEditText"
+            android:text="@string/name" />
+
+        <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:autofillHints="@string/enter_name" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_big_time"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="15dp"
+            android:textSize="24sp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textAppearance="?attr/textAppearanceListItemSecondary"
+            android:text="@string/start" />
+
+        <Button
+            android:id="@+id/startTimePickButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_time" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_big_time"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="15dp"
+            android:textSize="24sp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textAppearance="?attr/textAppearanceListItemSecondary"
+            android:text="@string/end" />
+
+        <Button
+            android:id="@+id/endTimePickButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_time" />
+
+        <TextView
+            android:id="@+id/eventLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_big_location"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="15dp"
+            android:textSize="24sp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textAppearance="?attr/textAppearanceListItemSecondary"
+            android:text="Location" />
+
+        <Button
+            android:id="@+id/pickLocationButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pick Location" />
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_check_white_24dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
