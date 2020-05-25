@@ -7,4 +7,7 @@
     <string name="edit">Upravit</string>
     <string name="current_location">Aktuální poloha</string>
     <string name="location_access_denied">Přístup k poloze zamítnut</string>
+    <string name="number_of_events">Počet událostí</string>
+    <string name="number_of_drinks">Počet drinků</string>
+    <string name="money_spent">Celkem utraceno</string>
 </resources>

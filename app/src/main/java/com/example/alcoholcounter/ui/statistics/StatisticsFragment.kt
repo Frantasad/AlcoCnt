@@ -10,8 +10,28 @@ import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
 import cz.pv239.seminar2.EventDB
 import kotlinx.android.synthetic.main.fragment_statistics.*
+import java.math.BigDecimal
 
 class StatisticsFragment : Fragment() {
+    private val numberOfEvents: Int
+        get() { return MainApp.dataHandler.events.size }
+
+    private val numberOfDrinks: Int get() {
+        var drinkCount: Int = 0
+        for (event in MainApp.dataHandler.events) {
+            drinkCount += event.drinks.size
+        }
+        return drinkCount
+    }
+
+    private val totalCost: BigDecimal
+        get(){
+            var total = BigDecimal.ZERO
+            for (event in MainApp.dataHandler.events) {
+                total += event.totalPrice
+            }
+            return total
+        }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_statistics, container, false)
@@ -20,8 +40,10 @@ class StatisticsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val textView: TextView = view.findViewById(R.id.text_statistics)
-        textView.text = "Stistics"
+        number_of_events.text = numberOfEvents.toString()
+        number_of_drinks.text = numberOfDrinks.toString()
+        total_price.text = totalCost.toString()
+
         button.setOnClickListener{
             val data = MainApp.dataHandler!!
             data.events.clear()

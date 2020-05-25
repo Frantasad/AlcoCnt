@@ -7,4 +7,7 @@
     <string name="edit">Edit</string>
     <string name="current_location">Current location</string>
     <string name="location_access_denied">Access to location denied</string>
+    <string name="number_of_events">Number of events</string>
+    <string name="number_of_drinks">Number of drinks</string>
+    <string name="money_spent">Money spent</string>
 </resources>
