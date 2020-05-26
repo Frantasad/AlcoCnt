@@ -1,22 +1,21 @@
 package com.example.alcoholcounter.ui.events
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.alcoholcounter.DataHandler
 import com.example.alcoholcounter.MainActivity
+import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
+import com.example.alcoholcounter.ui.event.EventEditFragment
 import com.example.alcoholcounter.ui.event.EventFragment
 import kotlinx.android.synthetic.main.fragment_eventlist.*
-import com.example.alcoholcounter.MainApp
-import com.example.alcoholcounter.ui.event.Drink
 import java.util.*
 
-class EventListFragment : Fragment(), EventListAdapter.OnEventClickListener {
+
+class EventListFragment : Fragment(),
+    EventListAdapter.OnClickListener,
+    EventEditFragment.OnEditedListener {
 
     private lateinit var events : ArrayList<Event>
     private lateinit var eventListAdapter : EventListAdapter
@@ -36,12 +35,9 @@ class EventListFragment : Fragment(), EventListAdapter.OnEventClickListener {
         eventsListRecycler.layoutManager = linearLayoutManager
 
         fab.setOnClickListener {
-            events.add(Event("NOVE", Calendar.getInstance().time, Calendar.getInstance().time, arrayListOf(
-                Drink("Test 12°")
-            )))
-            MainApp.dataHandler.events = events
-            eventListAdapter.notifyDataSetChanged();
-            eventsListRecycler.smoothScrollToPosition(events.size - 1);
+            val frag = EventEditFragment(null)
+            frag.onEditedListener = this
+            (activity as MainActivity).replaceFragment(frag)
         }
     }
 
@@ -65,6 +61,11 @@ class EventListFragment : Fragment(), EventListAdapter.OnEventClickListener {
 
     override fun onItemClicked(event: Event) {
         (activity as MainActivity).replaceFragment(EventFragment(event))
+    }
+
+    override fun onEditConfirmClicked() {
+        eventListAdapter.notifyDataSetChanged();
+        eventsListRecycler.smoothScrollToPosition(events.size - 1);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.alcoholcounter
 
 import android.os.Bundle
+import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         if (selectedFragment == null) {
             selectedFragment = when (item.itemId) {
                 R.id.navigation_map -> MapFragment()
-                R.id.navigation_statistics -> EventEditFragment()
+                R.id.navigation_statistics -> StatisticsFragment()
                 R.id.navigation_events -> EventListFragment()
                 else -> EventListFragment()
             }

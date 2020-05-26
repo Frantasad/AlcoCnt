@@ -1,24 +1,32 @@
 package com.example.alcoholcounter.ui.event
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
+import com.example.alcoholcounter.ui.events.Event
 import kotlinx.android.synthetic.main.fragment_event_edit.*
 import java.text.DateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-class EventEditFragment : Fragment() {
+class EventEditFragment(val event : Event?) : Fragment(){
 
     private lateinit var startCalendar : Calendar
     private lateinit var endCalendar : Calendar
+
+    var onEditedListener : OnEditedListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,72 +39,113 @@ class EventEditFragment : Fragment() {
         startCalendar = Calendar.getInstance()
         endCalendar = Calendar.getInstance()
 
+        if(event != null){
+            nameEditText.setText(event.title)
+
+            if(event.timeFrom != null){
+                startCalendar.time = event.timeFrom!!
+            }
+            if(event.timeTo != null){
+                endCalendar.time = event.timeTo!!
+            }
+        }
+
         val locale = Locale.getDefault()
-        val dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, locale);
+        val dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, locale)
 
         startTimePickButton.text = dateFormat.format(startCalendar.time)
         endTimePickButton.text = dateFormat.format(endCalendar.time)
 
-        startTimePickButton.setOnClickListener {
-            val mYear= startCalendar.get(Calendar.YEAR)
-            val mMonth = startCalendar.get(Calendar.MONTH)
-            val mDay = startCalendar.get(Calendar.DAY_OF_MONTH)
-            val mHour = startCalendar[Calendar.HOUR_OF_DAY]
-            val mMinute = startCalendar[Calendar.MINUTE]
+        confirm_button.setOnClickListener{
+            if(nameEditText.text.isNotEmpty()){
+                if(event == null){
+                    createEvent()
+                }else{
+                    editEvent()
+                }
+                val fragmentManager = requireActivity().supportFragmentManager
+                fragmentManager.popBackStackImmediate()
+                onEditedListener?.onEditConfirmClicked()
+            } else {
+                val builder = AlertDialog.Builder(context)
+                builder.setMessage("Invalid data!")
+                    .setCancelable(false)
+                    .setPositiveButton("OK"
+                    ) { dialog, id -> }
+                val alert: AlertDialog = builder.create()
+                alert.show()
+            }
+        }
+
+        startTimeNowButton.setOnClickListener {
+            startCalendar = Calendar.getInstance()
+            startTimePickButton.text = dateFormat.format(startCalendar.time)
+        }
+
+        endTimeNowButton.setOnClickListener {
+            endCalendar = Calendar.getInstance()
+            endTimePickButton.text = dateFormat.format(endCalendar.time)
+        }
+
+        setDateTimePicker(startTimePickButton, startCalendar)
+        setDateTimePicker(endTimePickButton, endCalendar)
+    }
+
+    private fun createEvent(){
+        val newEvent = Event(
+            nameEditText.text.toString(),
+            startCalendar.time,
+            endCalendar.time,
+            ArrayList()
+        )
+        MainApp.dataHandler.events.add(newEvent)
+    }
+
+    private fun editEvent(){
+        if(event != null){
+            event.title = nameEditText.text.toString()
+            event.timeFrom = startCalendar.time
+            event.timeTo = endCalendar.time
+        }
+    }
+
+    private fun setDateTimePicker(button: Button, calendar: Calendar){
+        val locale = Locale.getDefault()
+        val dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, locale)
+
+        button.setOnClickListener {
+            val mYear= calendar.get(Calendar.YEAR)
+            val mMonth = calendar.get(Calendar.MONTH)
+            val mDay = calendar.get(Calendar.DAY_OF_MONTH)
+            val mHour = calendar[Calendar.HOUR_OF_DAY]
+            val mMinute = calendar[Calendar.MINUTE]
 
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
                 OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                    startCalendar.set(year, monthOfYear, dayOfMonth)
+                    calendar.set(year, monthOfYear, dayOfMonth)
                     val timePickerDialog = TimePickerDialog(
                         requireContext(),
                         OnTimeSetListener { _, hourOfDay, minute ->
-                            startCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                            startCalendar.set(Calendar.MINUTE, minute)
-                            startTimePickButton.text = dateFormat.format(startCalendar.time)
+                            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                            calendar.set(Calendar.MINUTE, minute)
+                            button.text = dateFormat.format(calendar.time)
                         },
                         mHour,
                         mMinute,
                         true
                     )
-                    startCalendar.set(Calendar.HOUR_OF_DAY, mHour)
-                    startCalendar.set(Calendar.MINUTE, mMinute)
+                    calendar.set(Calendar.HOUR_OF_DAY, mHour)
+                    calendar.set(Calendar.MINUTE, mMinute)
                     timePickerDialog.show()
                 }, mYear, mMonth, mDay
             )
-            startCalendar.set(mYear, mMonth, mDay)
+            calendar.set(mYear, mMonth, mDay)
             datePickerDialog.show()
         }
+    }
 
-        endTimePickButton.setOnClickListener {
-            val mYear= endCalendar.get(Calendar.YEAR)
-            val mMonth = endCalendar.get(Calendar.MONTH)
-            val mDay = endCalendar.get(Calendar.DAY_OF_MONTH)
-            val mHour = endCalendar[Calendar.HOUR_OF_DAY]
-            val mMinute = endCalendar[Calendar.MINUTE]
-
-            val datePickerDialog = DatePickerDialog(
-                requireContext(),
-                OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                    endCalendar.set(year, monthOfYear, dayOfMonth)
-                    val timePickerDialog = TimePickerDialog(
-                        requireContext(),
-                        OnTimeSetListener { _, hourOfDay, minute ->
-                            endCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                            endCalendar.set(Calendar.MINUTE, minute)
-                            endTimePickButton.text = dateFormat.format(endCalendar.time)
-                        },
-                        mHour,
-                        mMinute,
-                        true
-                    )
-                    endCalendar.set(Calendar.HOUR_OF_DAY, mHour)
-                    endCalendar.set(Calendar.MINUTE, mMinute)
-                    timePickerDialog.show()
-                }, mYear, mMonth, mDay
-            )
-            endCalendar.set(mYear, mMonth, mDay)
-            datePickerDialog.show()
-        }
+    interface OnEditedListener {
+        fun onEditConfirmClicked()
     }
 }
