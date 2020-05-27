@@ -143,7 +143,7 @@ class MapFragment : Fragment(),
         for (event in MainApp.dataHandler.events) {
             if (event.location != null) {
                 val markerOptions = MarkerOptions()
-                markerOptions.position(LatLng(event.location!!.latitude, event.location!!.longitude))
+                markerOptions.position(LatLng(event.location!!.first, event.location!!.second))
                 markerOptions.title(event.title)
                 if (!event.ended) {
                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))

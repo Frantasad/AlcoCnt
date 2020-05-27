@@ -21,4 +21,6 @@
     <string name="location">Location</string>
     <string name="pick_location">Pick Location</string>
     <string name="showlocation">Show Location</string>
+    <string name="unknown_location">Unknown location</string>
+
 </resources>

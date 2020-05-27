@@ -10,7 +10,7 @@ data class Event(var title: String) {
     var timeFrom: Date? = null
     var timeTo: Date? = null
     var drinks: ArrayList<Drink> = ArrayList()
-    var location: Location? = null
+    var location: Pair<Double, Double>? = null // first = latitude, second = longitude
     val totalPrice: BigDecimal
         get(){
             var total = BigDecimal.ZERO
