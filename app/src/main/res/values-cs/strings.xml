@@ -18,4 +18,7 @@
     <string name="number_of_drinks">Počet drinků</string>
     <string name="money_spent">Celkem utraceno</string>
     <string name="now">Teď</string>
+    <string name="location">Poloha</string>
+    <string name="pick_location">Vybrat polohu</string>
+    <string name="showlocation">Zobrazit polohu</string>
 </resources>

@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_access_time_green_16dp"
                 android:drawablePadding="5dp"
-                android:layout_marginTop="4dp"
+
                 android:textAppearance="?attr/textAppearanceListItemSecondary"
                 tools:text="21:00 - 23:00" />
 
@@ -64,10 +64,18 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_place_green_16dp"
                 android:drawablePadding="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="4dp"
                 android:textAppearance="?attr/textAppearanceListItemSecondary"
-                android:layout_marginBottom="8dp"
+
                 tools:text="My Bar" />
+
+            <Button
+                android:id="@+id/showLocationButton"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/showlocation" />
 
         </LinearLayout>
 

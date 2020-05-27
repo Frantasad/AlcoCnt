@@ -64,8 +64,8 @@ class EventListFragment : Fragment(),
     }
 
     override fun onEditConfirmClicked() {
-        eventListAdapter.notifyDataSetChanged();
-        eventsListRecycler.smoothScrollToPosition(events.size - 1);
+        eventListAdapter.notifyDataSetChanged()
+        eventsListRecycler.smoothScrollToPosition(events.size - 1)
     }
 
 }

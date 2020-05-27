@@ -5,13 +5,16 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
-import android.content.DialogInterface
+import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import com.example.alcoholcounter.Helpers
 import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
 import com.example.alcoholcounter.ui.events.Event
@@ -26,6 +29,10 @@ class EventEditFragment(val event : Event?) : Fragment(){
     private lateinit var startCalendar : Calendar
     private lateinit var endCalendar : Calendar
 
+    private var location : Location? = null
+
+    private val locationPicked : Boolean = false
+
     var onEditedListener : OnEditedListener? = null
 
     override fun onCreateView(
@@ -33,6 +40,7 @@ class EventEditFragment(val event : Event?) : Fragment(){
         return inflater.inflate(R.layout.fragment_event_edit, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -48,6 +56,11 @@ class EventEditFragment(val event : Event?) : Fragment(){
             if(event.timeTo != null){
                 endCalendar.time = event.timeTo!!
             }
+
+            if(event.location != null){
+                location = event.location!!
+                pickLocationButton.text = Helpers.stringFromLocation(location!!)
+            }
         }
 
         val locale = Locale.getDefault()
@@ -57,7 +70,7 @@ class EventEditFragment(val event : Event?) : Fragment(){
         endTimePickButton.text = dateFormat.format(endCalendar.time)
 
         confirm_button.setOnClickListener{
-            if(nameEditText.text.isNotEmpty()){
+            if(nameEditText.text.isNotEmpty() && pickLocationProgress.visibility == View.GONE){
                 if(event == null){
                     createEvent()
                 }else{
@@ -89,6 +102,17 @@ class EventEditFragment(val event : Event?) : Fragment(){
 
         setDateTimePicker(startTimePickButton, startCalendar)
         setDateTimePicker(endTimePickButton, endCalendar)
+        pickLocationButton.setOnClickListener {
+            pickLocationProgress.visibility = View.VISIBLE
+            pickLocationButton.isEnabled = false
+            MainApp.getCurrentLocation { location ->
+                pickLocationProgress.setProgress(0, false)
+                this.location = location
+                pickLocationProgress.visibility = View.GONE
+                pickLocationButton.isEnabled = true
+                pickLocationButton.text = Helpers.stringFromLocation(location)
+            }
+        }
     }
 
     private fun createEvent(){
@@ -98,6 +122,7 @@ class EventEditFragment(val event : Event?) : Fragment(){
             endCalendar.time,
             ArrayList()
         )
+        newEvent.location = location
         MainApp.dataHandler.events.add(newEvent)
     }
 
@@ -106,6 +131,7 @@ class EventEditFragment(val event : Event?) : Fragment(){
             event.title = nameEditText.text.toString()
             event.timeFrom = startCalendar.time
             event.timeTo = endCalendar.time
+            event.location = location
         }
     }
 

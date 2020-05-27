@@ -7,6 +7,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.alcoholcounter.Helpers
 import com.example.alcoholcounter.MainActivity
 import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
@@ -74,6 +75,14 @@ class EventFragment(val event : Event) : Fragment() {
         }
 
         eventPrice.text = String.format("%s %s", event.totalPrice.toString(), currency.symbol)
+        showLocationButton.visibility = View.GONE
+        if(event.location != null){
+            eventLocation.text = Helpers.stringFromLocation(event.location!!)
+            showLocationButton.visibility = View.VISIBLE
+            showLocationButton.setOnClickListener {
+                // TODO
+            }
+        }
         drinkListRecycler.layoutManager = LinearLayoutManager(context)
     }
 }

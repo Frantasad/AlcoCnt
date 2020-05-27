@@ -28,6 +28,7 @@ class DrinkListAdapter(private val drinks: List<Drink>) :
         var title: TextView = itemView.findViewById(R.id.drinkTitle)
         fun bind(drink: Drink) {
             title.text = drink.name
+
         }
     }
 }
