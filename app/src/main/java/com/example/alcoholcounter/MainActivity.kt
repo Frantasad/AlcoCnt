@@ -14,14 +14,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    companion object {
-        private const val STATE_SAVE_STATE = "save_state"
-        private const val STATE_KEEP_FRAGS = "keep_frags"
-        private const val STATE_HELPER = "helper"
-    }
-
-    private lateinit var stateHelper: FragmentStateHelper
-
     private val fragments = mutableMapOf<Int, Fragment>()
 
     private val navigationSelectionListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -36,11 +28,6 @@ class MainActivity : AppCompatActivity() {
         }
         fragments[item.itemId] = selectedFragment
 
-        if (nav_view.selectedItemId != 0) {
-            saveCurrentState()
-            stateHelper.restoreState(selectedFragment, item.itemId)
-        }
-
         val fragmentManager = supportFragmentManager
         fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         if (selectedFragment != null) {
@@ -54,38 +41,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        stateHelper = FragmentStateHelper(supportFragmentManager)
-
         nav_view.setOnNavigationItemSelectedListener(navigationSelectionListener)
 
         if (savedInstanceState == null) {
             nav_view.selectedItemId = R.id.navigation_events
-        } else {
-            /*state_switch.isChecked = savedInstanceState.getBoolean(STATE_SAVE_STATE)
-            keep_switch.isChecked = savedInstanceState.getBoolean(STATE_KEEP_FRAGS)*/
-
-            val helperState = savedInstanceState.getBundle(STATE_HELPER)
-            if (helperState != null) {
-                stateHelper.restoreHelperState(helperState)
-            }
         }
-
 
         if (ContextCompat.checkSelfPermission(MainApp.appContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 666)
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        // Make sure we save the current tab's state too!
-        saveCurrentState()
-        super.onSaveInstanceState(outState)
-    }
-
-    private fun saveCurrentState() {
-        fragments[nav_view.selectedItemId]?.let { oldFragment->
-            stateHelper.saveState(oldFragment, nav_view.selectedItemId)
         }
     }
 

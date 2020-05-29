@@ -59,6 +59,7 @@ class EventFragment(val event : Event) : Fragment(),
                         fragmentManager.popBackStackImmediate()
                     }
                     .setNegativeButton(android.R.string.no, null).show()
+
                 return true
             }
         }
@@ -86,13 +87,9 @@ class EventFragment(val event : Event) : Fragment(),
         }
 
         eventPrice.text = String.format("%s %s", event.totalPrice.toString(), currency.symbol)
-        showLocationButton.visibility = View.GONE
+
         if(event.location != null){
             eventLocation.text = Helpers.stringFromLocation(event.location!!)
-            showLocationButton.visibility = View.VISIBLE
-            showLocationButton.setOnClickListener {
-                // TODO
-            }
         } else {
             eventLocation.text = getString(R.string.unknown_location)
         }
@@ -126,6 +123,7 @@ class EventFragment(val event : Event) : Fragment(),
                             ) { dialog, whichButton ->
                                 event.drinks.remove(drink)
                                 drinkListAdapter.notifyDataSetChanged()
+                                onItemChanged()
                             }
                             .setNegativeButton(android.R.string.no, null)
                             .show()
