@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.alcoholcounter.MainActivity
 import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
 import com.google.android.gms.common.ConnectionResult
@@ -60,6 +61,11 @@ class MapFragment : Fragment(),
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_map, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).setActionBarTitle(getString(R.string.title_map))
     }
 
     private fun locationPermissionGranted() : Boolean {

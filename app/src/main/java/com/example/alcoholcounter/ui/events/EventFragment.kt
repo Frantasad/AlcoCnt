@@ -26,7 +26,6 @@ class EventFragment(val event : Event) : Fragment(),
     DrinkListAdapter.OnMenuClickListener,
     DrinkEditFragment.OnItemChangedListener
 {
-
     private lateinit var drinkListAdapter: DrinkListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

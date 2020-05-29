@@ -13,6 +13,7 @@ import com.example.alcoholcounter.ui.statistics.StatisticsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
     private val fragments = mutableMapOf<Int, Fragment>()
 
@@ -58,6 +59,10 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.nav_host_fragment, fragment)
         transaction.addToBackStack(fragment.tag)
         transaction.commit()
+    }
+
+    fun setActionBarTitle(title: String?) {
+        supportActionBar!!.title = title
     }
 
 }

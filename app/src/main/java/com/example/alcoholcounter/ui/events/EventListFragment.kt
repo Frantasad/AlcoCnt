@@ -27,6 +27,7 @@ class EventListFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).setActionBarTitle(getString(R.string.title_events))
         events = MainApp.dataHandler.events
         eventListAdapter = EventListAdapter(events, this, this)
         eventsListRecycler.adapter = eventListAdapter

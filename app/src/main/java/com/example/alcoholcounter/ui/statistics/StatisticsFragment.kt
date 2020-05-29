@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.alcoholcounter.MainActivity
 import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
 import cz.pv239.seminar2.EventDB
@@ -40,7 +41,7 @@ class StatisticsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (activity as MainActivity).setActionBarTitle(getString(R.string.title_statistics))
         val locale = Locale.getDefault()
         val currency = Currency.getInstance(locale)
 
