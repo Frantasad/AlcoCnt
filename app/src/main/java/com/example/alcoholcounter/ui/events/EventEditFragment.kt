@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.alcoholcounter.Helpers
@@ -130,6 +131,7 @@ class EventEditFragment(val event : Event?) : Fragment(){
         )
         newEvent.location = location
         MainApp.dataHandler.events.add(newEvent)
+        Toast.makeText(context, "KURVA", Toast.LENGTH_SHORT).show()
     }
 
     private fun editEvent(){

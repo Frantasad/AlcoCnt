@@ -26,4 +26,5 @@
     <string name="edit_drink">Edit drink</string>
     <string name="price">Price</string>
     <string name="enter_price">Enter price</string>
+    <string name="deleteEventMessage">Do you really want to delete this event?</string>
 </resources>

@@ -26,4 +26,5 @@
     <string name="edit_drink">Upravit drink</string>
     <string name="price">Cena</string>
     <string name="enter_price">Zadej cenu</string>
+    <string name="deleteEventMessage">Opravdu chcete smazat tuto událost?</string>
 </resources>

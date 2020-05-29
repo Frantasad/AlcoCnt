@@ -1,15 +1,21 @@
 package com.example.alcoholcounter.ui.drinks
 
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
+import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.alcoholcounter.MainActivity
+import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
+import com.example.alcoholcounter.ui.events.EventEditFragment
 import java.text.DateFormat
 import java.util.*
+
 
 class DrinkListAdapter(private val drinks: List<Drink>) :
     RecyclerView.Adapter<DrinkListAdapter.ViewHolder>() {
@@ -36,6 +42,8 @@ class DrinkListAdapter(private val drinks: List<Drink>) :
 
         var cntPlus: ImageButton = itemView.findViewById(R.id.countPlus)
         var cntMinus: ImageButton = itemView.findViewById(R.id.countMinus)
+
+        var menuButton: ImageButton = itemView.findViewById(R.id.menuButton)
 
         fun bind(drink: Drink) {
             val locale = Locale.getDefault()
@@ -72,6 +80,24 @@ class DrinkListAdapter(private val drinks: List<Drink>) :
                 amount.text = drink.amount.toString()
                 drink.lastAdded.add(Calendar.getInstance().time)
                 updateLastAddedText()
+            }
+
+            menuButton.setOnClickListener {
+                val popup = PopupMenu(itemView.context, menuButton)
+                popup.menuInflater.inflate(R.menu.event_menu, popup.menu)
+                popup.show()
+
+                popup.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.edit -> {
+
+                        }
+                        R.id.delete -> {
+
+                        }
+                    }
+                    true
+                }
             }
         }
     }

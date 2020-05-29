@@ -12,16 +12,40 @@
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     style="@style/itemNonClickable">
 
-    <TextView
-        android:id="@+id/drinkTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textColor="@android:color/holo_blue_dark"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:layout_marginTop="4dp"
-        tools:text="Plzeň 12°" />
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/drinkTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textColor="@android:color/holo_blue_dark"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:layout_marginTop="4dp"
+                tools:text="Plzeň 12°" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/menuButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_gravity="bottom|end"
+            android:background="@drawable/ic_more_vert_black_24dp"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

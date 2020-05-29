@@ -36,15 +36,14 @@ class EventFragment(val event : Event) : Fragment(), EventEditFragment.OnEditedL
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.edit -> {
-                val frag =
-                    EventEditFragment(event)
+                val frag = EventEditFragment(event)
                 (activity as MainActivity).replaceFragment(frag)
                 return true
             }
             R.id.delete -> {
                 AlertDialog.Builder(context)
-                    .setTitle("Delete?")
-                    .setMessage("Do you really want to delete this event?")
+                    .setTitle(getString(R.string.delete))
+                    .setMessage(getString(R.string.deleteEventMessage))
                     .setIcon(R.drawable.ic_warning_black_24dp)
                     .setPositiveButton(
                         android.R.string.yes
