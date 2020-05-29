@@ -11,6 +11,7 @@ import com.example.alcoholcounter.R
 import cz.pv239.seminar2.EventDB
 import kotlinx.android.synthetic.main.fragment_statistics.*
 import java.math.BigDecimal
+import java.util.*
 
 class StatisticsFragment : Fragment() {
     private val numberOfEvents: Int
@@ -40,9 +41,12 @@ class StatisticsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val locale = Locale.getDefault()
+        val currency = Currency.getInstance(locale)
+
         number_of_events.text = numberOfEvents.toString()
         number_of_drinks.text = numberOfDrinks.toString()
-        total_price.text = totalCost.toString()
+        total_price.text = String.format("%s %s", totalCost.toString(), currency.symbol)
 
         button.setOnClickListener{
             val data = MainApp.dataHandler

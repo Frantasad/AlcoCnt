@@ -60,29 +60,29 @@
             android:textAppearance="?attr/textAppearanceListItemSecondary"
             android:text="@string/price" />
 
-        <EditText
-            android:id="@+id/priceEditText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:hint="@string/enter_price"
-            android:inputType="numberDecimal"
-            />
+            android:orientation="horizontal">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/price"
-            app:startIconDrawable="@drawable/ic_big_time"
-            android:drawablePadding="10dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/priceSymbol"
+                android:layout_width="0dp"
+                android:layout_weight="20"
                 android:layout_height="wrap_content"
+                android:gravity="right"
+                tools:text="$" />
+
+            <EditText
+                android:id="@+id/priceEditText"
+                android:layout_width="0dp"
+                android:layout_weight="80"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:hint="@string/enter_price"
                 android:inputType="numberDecimal"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
-
+        </LinearLayout>
 
     </LinearLayout>
 

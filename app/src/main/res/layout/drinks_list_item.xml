@@ -37,7 +37,7 @@
             android:layout_alignParentStart="true" >
 
             <TextView
-                android:id="@+id/eventPrize"
+                android:id="@+id/drinkPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_attach_money_green_16dp"
@@ -53,6 +53,7 @@
                 android:layout_marginTop="4dp"
                 android:drawableStart="@drawable/ic_access_time_green_16dp"
                 android:drawablePadding="5dp"
+                android:textSize="12sp"
                 android:textAppearance="?attr/textAppearanceListItemSecondary"
                 tools:text="21:13" />
         </LinearLayout>
@@ -83,7 +84,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:textSize="35sp"
-                android:text="100" />
+                tools:text="100" />
 
             <ImageButton
                 android:id="@+id/countPlus"

@@ -10,13 +10,18 @@ import com.example.alcoholcounter.MainActivity
 import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
 import com.example.alcoholcounter.ui.drinks.DrinkDB
+import com.example.alcoholcounter.ui.drinks.DrinkEditFragment
 import com.example.alcoholcounter.ui.drinks.DrinkListAdapter
 import kotlinx.android.synthetic.main.fragment_event.*
+import kotlinx.android.synthetic.main.fragment_event.fab
+import kotlinx.android.synthetic.main.fragment_eventlist.*
 import java.text.DateFormat
 import java.util.*
 
 
-class EventFragment(val event : Event) : Fragment() {
+class EventFragment(val event : Event) : Fragment(), EventEditFragment.OnEditedListener {
+
+    private lateinit var drinkListAdapter: DrinkListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -57,13 +62,13 @@ class EventFragment(val event : Event) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter =
-            DrinkListAdapter(event.drinks)
-        drinkListRecycler.adapter = adapter
+        drinkListAdapter = DrinkListAdapter(event.drinks)
+        drinkListRecycler.adapter = drinkListAdapter
 
         fab.setOnClickListener {
-            event.drinks.addAll(DrinkDB())
-            adapter.notifyDataSetChanged();
+            val frag = DrinkEditFragment(null, event)
+            frag.onEditedListener = this
+            (activity as MainActivity).replaceFragment(frag)
         }
 
         eventTitle.text = event.title
@@ -83,7 +88,14 @@ class EventFragment(val event : Event) : Fragment() {
             showLocationButton.setOnClickListener {
                 // TODO
             }
+        } else {
+            eventLocation.text = getString(R.string.unknown_location)
         }
         drinkListRecycler.layoutManager = LinearLayoutManager(context)
+    }
+
+    override fun onEditConfirmClicked() {
+        drinkListAdapter.notifyDataSetChanged()
+        drinkListRecycler.smoothScrollToPosition(event.drinks.size - 1)
     }
 }

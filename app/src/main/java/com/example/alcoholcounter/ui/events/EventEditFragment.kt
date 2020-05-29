@@ -110,7 +110,6 @@ class EventEditFragment(val event : Event?) : Fragment(){
                 pickLocationProgress.visibility = View.VISIBLE
                 pickLocationButton.isEnabled = false
                 MainApp.getCurrentLocation { location ->
-                    pickLocationProgress.setProgress(0, false)
                     this.location = Pair(location.latitude, location.longitude)
                     pickLocationProgress.visibility = View.GONE
                     pickLocationButton.isEnabled = true

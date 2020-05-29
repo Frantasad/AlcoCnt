@@ -57,6 +57,8 @@ class EventListAdapter(
             price.text = String.format("%s %s", event.totalPrice.toString(), currency.symbol)
             if(event.location != null){
                 locationText.text = Helpers.stringFromLocation(event.location!!)
+            } else {
+                locationText.text = itemView.context.getString(R.string.unknown_location)
             }
             itemView.setOnClickListener{
                 clickListener.onItemClicked(event)
