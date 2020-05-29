@@ -1,9 +1,8 @@
 package cz.pv239.seminar2
 
-import com.example.alcoholcounter.ui.event.Drink
-import com.example.alcoholcounter.ui.event.DrinkDB
+import com.example.alcoholcounter.ui.drinks.Drink
+import com.example.alcoholcounter.ui.drinks.DrinkDB
 import com.example.alcoholcounter.ui.events.Event
-import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 

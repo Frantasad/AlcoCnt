@@ -1,4 +1,4 @@
-package com.example.alcoholcounter.ui.event
+package com.example.alcoholcounter.ui.events
 
 import android.Manifest
 import android.app.AlertDialog
@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment
 import com.example.alcoholcounter.Helpers
 import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
-import com.example.alcoholcounter.ui.events.Event
 import kotlinx.android.synthetic.main.fragment_event_edit.*
 import java.text.DateFormat
 import java.util.*

@@ -1,17 +1,16 @@
-package com.example.alcoholcounter.ui.event
+package com.example.alcoholcounter.ui.events
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alcoholcounter.Helpers
 import com.example.alcoholcounter.MainActivity
 import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
-import com.example.alcoholcounter.ui.events.Event
+import com.example.alcoholcounter.ui.drinks.DrinkDB
+import com.example.alcoholcounter.ui.drinks.DrinkListAdapter
 import kotlinx.android.synthetic.main.fragment_event.*
 import java.text.DateFormat
 import java.util.*
@@ -32,7 +31,8 @@ class EventFragment(val event : Event) : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.edit -> {
-                val frag = EventEditFragment(event)
+                val frag =
+                    EventEditFragment(event)
                 (activity as MainActivity).replaceFragment(frag)
                 return true
             }
@@ -57,7 +57,8 @@ class EventFragment(val event : Event) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = DrinkListAdapter(event.drinks)
+        val adapter =
+            DrinkListAdapter(event.drinks)
         drinkListRecycler.adapter = adapter
 
         fab.setOnClickListener {

@@ -1,4 +1,4 @@
-package com.example.alcoholcounter.ui.event
+package com.example.alcoholcounter.ui.drinks
 
 import android.view.LayoutInflater
 import android.view.View

@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alcoholcounter.MainActivity
 import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
-import com.example.alcoholcounter.ui.event.EventEditFragment
-import com.example.alcoholcounter.ui.event.EventFragment
 import kotlinx.android.synthetic.main.fragment_eventlist.*
 import java.util.*
 
@@ -35,7 +33,8 @@ class EventListFragment : Fragment(),
         eventsListRecycler.layoutManager = linearLayoutManager
 
         fab.setOnClickListener {
-            val frag = EventEditFragment(null)
+            val frag =
+                EventEditFragment(null)
             frag.onEditedListener = this
             (activity as MainActivity).replaceFragment(frag)
         }
@@ -60,7 +59,11 @@ class EventListFragment : Fragment(),
     }
 
     override fun onItemClicked(event: Event) {
-        (activity as MainActivity).replaceFragment(EventFragment(event))
+        (activity as MainActivity).replaceFragment(
+            EventFragment(
+                event
+            )
+        )
     }
 
     override fun onEditConfirmClicked() {

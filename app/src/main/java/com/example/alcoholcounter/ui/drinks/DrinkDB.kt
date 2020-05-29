@@ -1,6 +1,5 @@
-package com.example.alcoholcounter.ui.event
+package com.example.alcoholcounter.ui.drinks
 
-import com.example.alcoholcounter.ui.event.Drink
 import java.util.*
 
 class DrinkDB : ArrayList<Drink>() {

@@ -3,13 +3,10 @@ package com.example.alcoholcounter
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.Menu
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.example.alcoholcounter.ui.event.EventEditFragment
 import com.example.alcoholcounter.ui.events.EventListFragment
 import com.example.alcoholcounter.ui.map.MapFragment
 import com.example.alcoholcounter.ui.statistics.StatisticsFragment

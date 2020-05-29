@@ -20,6 +20,7 @@
     <string name="now">Teď</string>
     <string name="location">Poloha</string>
     <string name="pick_location">Vybrat polohu</string>
-    <string name="showlocation">Zobrazit polohu</string>
+    <string name="show_location">Zobrazit polohu</string>
     <string name="unknown_location">Neznámá lokalita</string>
+    <string name="clear_data">Vyčistit data</string>
 </resources>
