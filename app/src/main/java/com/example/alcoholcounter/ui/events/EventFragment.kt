@@ -104,7 +104,7 @@ class EventFragment(val event : Event) : Fragment(),
         drinkListRecycler.smoothScrollToPosition(event.drinks.size - 1)
     }
 
-    override fun onItemClicked(drink: Drink, button: View) {
+    override fun onMenuClicked(drink: Drink, button: View) {
         button.setOnClickListener {
             val popup = PopupMenu(context, button)
             popup.menuInflater.inflate(R.menu.event_menu, popup.menu)
@@ -119,7 +119,7 @@ class EventFragment(val event : Event) : Fragment(),
                     R.id.delete -> {
                         AlertDialog.Builder(context )
                             .setTitle(requireActivity().getString(R.string.delete))
-                            .setMessage(requireActivity().getString(R.string.deleteEventMessage))
+                            .setMessage(requireActivity().getString(R.string.deleteDrinkMessage))
                             .setIcon(R.drawable.ic_warning_black_24dp)
                             .setPositiveButton(
                                 android.R.string.yes
@@ -139,7 +139,7 @@ class EventFragment(val event : Event) : Fragment(),
     override fun onItemChanged() {
         val locale = Locale.getDefault()
         val currency = Currency.getInstance(locale)
-        
+
         eventPrice.text = String.format("%s %s", event.totalPrice.toString(), currency.symbol)
     }
 }

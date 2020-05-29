@@ -85,12 +85,12 @@ class DrinkListAdapter(private val drinks: List<Drink>,
             }
 
             menuButton.setOnClickListener {
-                menuClickListener.onItemClicked(drink, menuButton)
+                menuClickListener.onMenuClicked(drink, menuButton)
             }
         }
     }
 
     interface OnMenuClickListener {
-        fun onItemClicked(drink: Drink, button: View )
+        fun onMenuClicked(drink: Drink, button: View )
     }
 }
