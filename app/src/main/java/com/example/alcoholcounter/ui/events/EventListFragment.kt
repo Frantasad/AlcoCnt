@@ -1,7 +1,9 @@
 package com.example.alcoholcounter.ui.events
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alcoholcounter.MainActivity
@@ -13,7 +15,8 @@ import java.util.*
 
 class EventListFragment : Fragment(),
     EventListAdapter.OnClickListener,
-    EventEditFragment.OnEditedListener {
+    EventEditFragment.OnEditedListener,
+    EventListAdapter.OnMenuClickListener {
 
     private lateinit var events : ArrayList<Event>
     private lateinit var eventListAdapter : EventListAdapter
@@ -25,7 +28,7 @@ class EventListFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         events = MainApp.dataHandler.events
-        eventListAdapter = EventListAdapter(events, this)
+        eventListAdapter = EventListAdapter(events, this, this)
         eventsListRecycler.adapter = eventListAdapter
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.reverseLayout = true
@@ -60,15 +63,45 @@ class EventListFragment : Fragment(),
 
     override fun onItemClicked(event: Event) {
         (activity as MainActivity).replaceFragment(
-            EventFragment(
-                event
-            )
+            EventFragment(event)
         )
     }
 
     override fun onEditConfirmClicked() {
         eventListAdapter.notifyDataSetChanged()
         eventsListRecycler.smoothScrollToPosition(events.size - 1)
+    }
+
+    override fun onItemClicked(event: Event, button: View) {
+        button.setOnClickListener {
+            val popup = PopupMenu(context, button)
+            popup.menuInflater.inflate(R.menu.event_menu, popup.menu)
+            popup.show()
+
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.edit -> {
+                        val frag = EventEditFragment(event)
+                        (activity as MainActivity).replaceFragment(frag)
+                    }
+                    R.id.delete -> {
+                        AlertDialog.Builder(context )
+                            .setTitle(requireActivity().getString(R.string.delete))
+                            .setMessage(requireActivity().getString(R.string.deleteEventMessage))
+                            .setIcon(R.drawable.ic_warning_black_24dp)
+                            .setPositiveButton(
+                                android.R.string.yes
+                            ) { dialog, whichButton ->
+                                events.remove(event)
+                                eventListAdapter.notifyDataSetChanged()
+                            }
+                            .setNegativeButton(android.R.string.no, null)
+                            .show()
+                    }
+                }
+                true
+            }
+        }
     }
 
 }

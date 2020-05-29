@@ -20,22 +20,23 @@ import kotlin.collections.ArrayList
 
 class EventListAdapter(
     private val events: ArrayList<Event>,
-    private val clickListener : OnClickListener
+    private val clickListener : OnClickListener,
+    private val menuClickListener : OnMenuClickListener
 ) : RecyclerView.Adapter<EventListAdapter.EventViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
-        return EventViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.events_list_item, parent, false), this)
+        return EventViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.events_list_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        holder.bind(events[position], clickListener)
+        holder.bind(events[position], clickListener, menuClickListener)
     }
 
     override fun getItemCount(): Int {
         return events.size
     }
 
-    class EventViewHolder(itemView: View, val ownerAdapter : EventListAdapter) : RecyclerView.ViewHolder(itemView){
+    class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         private var title : TextView = itemView.findViewById(R.id.eventTitle)
         private var price : TextView = itemView.findViewById(R.id.eventPrize)
         private var timeText : TextView = itemView.findViewById(R.id.eventTime)
@@ -43,7 +44,7 @@ class EventListAdapter(
 
         var menuButton: ImageButton = itemView.findViewById(R.id.menuButton)
 
-        fun bind(event: Event, clickListener: OnClickListener) {
+        fun bind(event: Event, clickListener: OnClickListener, menuClickListener: OnMenuClickListener) {
             val locale = Locale.getDefault()
             val currency = Currency.getInstance(locale)
             val dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale)
@@ -72,36 +73,8 @@ class EventListAdapter(
                 clickListener.onItemClicked(event)
             }
 
-            menuButton.setOnClickListener {
-                val popup = PopupMenu(itemView.context, menuButton)
-                popup.menuInflater.inflate(R.menu.event_menu, popup.menu)
-                popup.show()
-
-                popup.setOnMenuItemClickListener { item ->
-                    when (item.itemId) {
-                        R.id.edit -> {
-                            val frag = EventEditFragment(event)
-                            (itemView.context as MainActivity).replaceFragment(frag)
-                        }
-                        R.id.delete -> {
-                            AlertDialog.Builder(itemView.context )
-                                .setTitle(itemView.context.getString(R.string.delete))
-                                .setMessage(itemView.context.getString(R.string.deleteEventMessage))
-                                .setIcon(R.drawable.ic_warning_black_24dp)
-                                .setPositiveButton(
-                                    android.R.string.yes
-                                ) { dialog, whichButton ->
-                                    MainApp.dataHandler.events.remove(event)
-                                    val fragmentManager = (itemView.context as MainActivity).supportFragmentManager
-                                    fragmentManager.popBackStackImmediate()
-                                    ownerAdapter.notifyDataSetChanged()
-                                }
-                                .setNegativeButton(android.R.string.no, null)
-                                .show()
-                        }
-                    }
-                    true
-                }
+            menuButton.setOnClickListener{
+                menuClickListener.onItemClicked(event, menuButton)
             }
         }
     }
@@ -111,6 +84,6 @@ class EventListAdapter(
     }
 
     interface OnMenuClickListener {
-        fun onItemClicked(event: Event)
+        fun onItemClicked(event: Event, button: View )
     }
 }

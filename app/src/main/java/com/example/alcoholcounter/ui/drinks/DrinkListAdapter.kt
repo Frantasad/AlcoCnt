@@ -1,23 +1,19 @@
 package com.example.alcoholcounter.ui.drinks
 
-import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.PopupMenu
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.alcoholcounter.MainActivity
-import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
-import com.example.alcoholcounter.ui.events.EventEditFragment
 import java.text.DateFormat
 import java.util.*
 
 
-class DrinkListAdapter(private val drinks: List<Drink>) :
+class DrinkListAdapter(private val drinks: List<Drink>,
+                       private val menuClickListener : DrinkListAdapter.OnMenuClickListener,
+                       private val itemChangedListener: DrinkEditFragment.OnItemChangedListener) :
     RecyclerView.Adapter<DrinkListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,7 +23,7 @@ class DrinkListAdapter(private val drinks: List<Drink>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(drinks[position])
+        holder.bind(drinks[position], menuClickListener, itemChangedListener)
     }
 
     override fun getItemCount(): Int {
@@ -45,7 +41,11 @@ class DrinkListAdapter(private val drinks: List<Drink>) :
 
         var menuButton: ImageButton = itemView.findViewById(R.id.menuButton)
 
-        fun bind(drink: Drink) {
+        fun bind(
+            drink: Drink,
+            menuClickListener: OnMenuClickListener,
+            itemChangedListener: DrinkEditFragment.OnItemChangedListener
+        ) {
             val locale = Locale.getDefault()
             val currency = Currency.getInstance(locale)
             val dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale)
@@ -73,6 +73,7 @@ class DrinkListAdapter(private val drinks: List<Drink>) :
                     }
                     updateLastAddedText()
                 }
+                itemChangedListener.onItemChanged()
             }
 
             cntPlus.setOnClickListener{
@@ -80,25 +81,16 @@ class DrinkListAdapter(private val drinks: List<Drink>) :
                 amount.text = drink.amount.toString()
                 drink.lastAdded.add(Calendar.getInstance().time)
                 updateLastAddedText()
+                itemChangedListener.onItemChanged()
             }
 
             menuButton.setOnClickListener {
-                val popup = PopupMenu(itemView.context, menuButton)
-                popup.menuInflater.inflate(R.menu.event_menu, popup.menu)
-                popup.show()
-
-                popup.setOnMenuItemClickListener { item ->
-                    when (item.itemId) {
-                        R.id.edit -> {
-
-                        }
-                        R.id.delete -> {
-
-                        }
-                    }
-                    true
-                }
+                menuClickListener.onItemClicked(drink, menuButton)
             }
         }
+    }
+
+    interface OnMenuClickListener {
+        fun onItemClicked(drink: Drink, button: View )
     }
 }

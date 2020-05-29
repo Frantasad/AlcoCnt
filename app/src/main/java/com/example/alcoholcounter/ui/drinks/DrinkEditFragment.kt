@@ -37,6 +37,11 @@ class DrinkEditFragment(private val drink : Drink?, val event : Event? = null) :
 
         priceSymbol.text = currency.symbol
 
+        if(drink != null){
+            priceEditText.setText(drink.price.toString())
+            nameEditText.setText(drink.name)
+        }
+
         confirm_button.setOnClickListener{
             if(nameEditText.text.isNotEmpty() && priceEditText.text.isNotEmpty()){
                 if(drink == null && event != null){
@@ -46,7 +51,7 @@ class DrinkEditFragment(private val drink : Drink?, val event : Event? = null) :
                     event.drinks.add(newDrink)
                 }else if (drink != null){
                     drink.name = nameEditText.text.toString()
-                    drink.price = BigDecimal(priceSymbol.text.toString())
+                    drink.price = BigDecimal(priceEditText.text.toString())
                 } else{
                     Log.e("Drink", "Invalid drink edit")
                 }
@@ -63,5 +68,9 @@ class DrinkEditFragment(private val drink : Drink?, val event : Event? = null) :
                 alert.show()
             }
         }
+    }
+
+    interface OnItemChangedListener {
+        fun onItemChanged()
     }
 }

@@ -14,7 +14,7 @@ data class Event(var title: String) {
         get(){
             var total = BigDecimal.ZERO
             for (drink in drinks) {
-                total += drink.price
+                total += drink.price * BigDecimal(drink.amount)
             }
             return total
         }
