@@ -23,8 +23,7 @@
     <string name="show_location">Show Location</string>
     <string name="unknown_location">Unknown location</string>
     <string name="clear_data">Clear data</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="edit_drink">Edit drink</string>
+    <string name="price">Price</string>
+    <string name="enter_price">Enter price</string>
 </resources>

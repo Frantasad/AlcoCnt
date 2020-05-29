@@ -23,4 +23,7 @@
     <string name="show_location">Zobrazit polohu</string>
     <string name="unknown_location">Neznámá lokalita</string>
     <string name="clear_data">Vyčistit data</string>
+    <string name="edit_drink">Upravit drink</string>
+    <string name="price">Cena</string>
+    <string name="enter_price">Zadej cenu</string>
 </resources>
