@@ -19,7 +19,9 @@ class StatisticsFragment : Fragment() {
     private val numberOfDrinks: Int get() {
         var drinkCount: Int = 0
         for (event in MainApp.dataHandler.events) {
-            drinkCount += event.drinks.size
+            for (drink in event.drinks) {
+                drinkCount += drink.amount
+            }
         }
         return drinkCount
     }
