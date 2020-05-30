@@ -104,9 +104,12 @@ class MapFragment : Fragment(),
 
     private fun mapInteractionInit() {
         buildGoogleApiClient()
-        _map!!.isMyLocationEnabled = true
-        MainApp.getCurrentLocation() { location -> setMapOnLocation(location, _defaultZoom) }
-        showEventMarkers()
+        val map = _map
+        if(map != null){
+            map.isMyLocationEnabled = true
+            MainApp.getCurrentLocation() { location -> setMapOnLocation(location, _defaultZoom) }
+            showEventMarkers()
+        }
     }
 
     @Synchronized
@@ -135,7 +138,8 @@ class MapFragment : Fragment(),
     override fun onLocationChanged(location: Location) {
         setMapOnLocation(location, _defaultZoom)
 
-        if (_googleApiClient != null && _googleApiClient!!.isConnected) {
+        val apiClient = _googleApiClient
+        if (apiClient != null && apiClient.isConnected) {
             LocationServices.FusedLocationApi.removeLocationUpdates(_googleApiClient, this)
         }
     }
@@ -147,9 +151,10 @@ class MapFragment : Fragment(),
 
     private fun loadEventMarkers() {
         for (event in MainApp.dataHandler.events) {
-            if (event.location != null) {
+            val loc = event.location
+            if (loc != null) {
                 val markerOptions = MarkerOptions()
-                markerOptions.position(LatLng(event.location!!.first, event.location!!.second))
+                markerOptions.position(LatLng(loc.first, loc.second))
                 markerOptions.title(event.title)
                 if (!event.ended) {
                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))

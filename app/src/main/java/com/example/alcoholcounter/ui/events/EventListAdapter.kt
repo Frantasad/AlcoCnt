@@ -50,21 +50,24 @@ class EventListAdapter(
             val dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale)
 
             var time = ""
-            if(event.timeFrom != null){
-                time += dateFormat.format(event.timeFrom!!)
+            val timeFrom = event.timeFrom
+            val timeTo = event.timeTo
+            if(timeFrom != null){
+                time += dateFormat.format(timeFrom)
             }
-            if(event.timeFrom != null && event.timeTo != null){
+            if(timeFrom != null && timeTo != null){
                 time += " - "
             }
-            if(event.timeTo != null){
-                time += dateFormat.format(event.timeTo!!)
+            if(timeTo != null){
+                time += dateFormat.format(timeTo)
             }
 
             title.text = event.title
             timeText.text = time
             price.text = String.format("%s %s", event.totalPrice.toString(), currency.symbol)
-            if(event.location != null){
-                locationText.text = Helpers.stringFromLocation(event.location!!)
+            val loc = event.location
+            if(loc != null){
+                locationText.text = Helpers.stringFromLocation(loc)
             } else {
                 locationText.text = itemView.context.getString(R.string.unknown_location)
             }

@@ -76,7 +76,7 @@ class EventListFragment : Fragment(),
     override fun onItemClicked(event: Event, button: View) {
         button.setOnClickListener {
             val popup = PopupMenu(context, button)
-            popup.menuInflater.inflate(R.menu.event_menu, popup.menu)
+            popup.menuInflater.inflate(R.menu.edit_menu, popup.menu)
             popup.show()
 
             popup.setOnMenuItemClickListener { item ->

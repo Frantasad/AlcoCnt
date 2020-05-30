@@ -16,7 +16,9 @@ class MainApp : Application() {
         fun getCurrentLocation(callback: (Location) -> Unit) {
             Handler().postDelayed({
                 fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
-                callback.invoke(location!!)
+                    if(location != null){
+                        callback.invoke(location)
+                    }
             }}, 500)
         }
 

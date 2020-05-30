@@ -11,12 +11,10 @@ import com.example.alcoholcounter.MainActivity
 import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
 import com.example.alcoholcounter.ui.drinks.Drink
-import com.example.alcoholcounter.ui.drinks.DrinkDB
 import com.example.alcoholcounter.ui.drinks.DrinkEditFragment
 import com.example.alcoholcounter.ui.drinks.DrinkListAdapter
 import kotlinx.android.synthetic.main.fragment_event.*
 import kotlinx.android.synthetic.main.fragment_event.fab
-import kotlinx.android.synthetic.main.fragment_eventlist.*
 import java.text.DateFormat
 import java.util.*
 
@@ -35,7 +33,7 @@ class EventFragment(val event : Event) : Fragment(),
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.event_menu, menu)
+        inflater.inflate(R.menu.edit_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -81,14 +79,28 @@ class EventFragment(val event : Event) : Fragment(),
         val currency = Currency.getInstance(locale)
         val dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
 
-        if(event.timeFrom != null){
-            eventTime.text = String.format("%s - %s", dateFormat.format(event.timeFrom!!), dateFormat.format(event.timeTo!!))
+        val from = event.timeFrom
+        val to = event.timeTo
+
+        var time = ""
+        val timeFrom = event.timeFrom
+        val timeTo = event.timeTo
+        if(timeFrom != null){
+            time += dateFormat.format(timeFrom)
         }
+        if(timeFrom != null && timeTo != null){
+            time += " - "
+        }
+        if(timeTo != null){
+            time += dateFormat.format(timeTo)
+        }
+        eventTime.text = time
 
         eventPrice.text = String.format("%s %s", event.totalPrice.toString(), currency.symbol)
 
-        if(event.location != null){
-            eventLocation.text = Helpers.stringFromLocation(event.location!!)
+        val loc = event.location
+        if(loc != null){
+            eventLocation.text = Helpers.stringFromLocation(loc)
         } else {
             eventLocation.text = getString(R.string.unknown_location)
         }
@@ -103,7 +115,7 @@ class EventFragment(val event : Event) : Fragment(),
     override fun onMenuClicked(drink: Drink, button: View) {
         button.setOnClickListener {
             val popup = PopupMenu(context, button)
-            popup.menuInflater.inflate(R.menu.event_menu, popup.menu)
+            popup.menuInflater.inflate(R.menu.edit_menu, popup.menu)
             popup.show()
 
             popup.setOnMenuItemClickListener { item ->

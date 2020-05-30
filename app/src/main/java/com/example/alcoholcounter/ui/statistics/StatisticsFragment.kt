@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.alcoholcounter.MainActivity
 import com.example.alcoholcounter.MainApp
 import com.example.alcoholcounter.R
-import cz.pv239.seminar2.EventDB
 import kotlinx.android.synthetic.main.fragment_statistics.*
 import java.math.BigDecimal
 import java.util.*
@@ -48,12 +46,5 @@ class StatisticsFragment : Fragment() {
         number_of_events.text = numberOfEvents.toString()
         number_of_drinks.text = numberOfDrinks.toString()
         total_price.text = String.format("%s %s", totalCost.toString(), currency.symbol)
-
-        button.setOnClickListener{
-            val data = MainApp.dataHandler
-            data.events.clear()
-            data.events.addAll(EventDB())
-            data.saveEvents()
-        }
     }
 }

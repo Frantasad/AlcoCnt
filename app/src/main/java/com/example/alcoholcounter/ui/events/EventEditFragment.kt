@@ -50,16 +50,18 @@ class EventEditFragment(val event : Event?) : Fragment(){
         if(event != null){
             nameEditText.setText(event.title)
 
-            if(event.timeFrom != null){
-                startCalendar.time = event.timeFrom!!
+            val from = event.timeFrom
+            if(from != null){
+                startCalendar.time = from
             }
-            if(event.timeTo != null){
-                endCalendar.time = event.timeTo!!
+            val to = event.timeTo
+            if(to != null){
+                endCalendar.time = to
             }
-
-            if(event.location != null){
-                location = event.location!!
-                pickLocationButton.text = Helpers.stringFromLocation(location!!)
+            val loc= event.location
+            if(loc != null){
+                location = loc
+                pickLocationButton.text = Helpers.stringFromLocation(loc)
             }
         }
 
@@ -111,10 +113,11 @@ class EventEditFragment(val event : Event?) : Fragment(){
                 pickLocationProgress.visibility = View.VISIBLE
                 pickLocationButton.isEnabled = false
                 MainApp.getCurrentLocation { location ->
-                    this.location = Pair(location.latitude, location.longitude)
+                    val loc = Pair(location.latitude, location.longitude)
+                    this.location = loc
                     pickLocationProgress.visibility = View.GONE
                     pickLocationButton.isEnabled = true
-                    pickLocationButton.text = Helpers.stringFromLocation(this.location!!)
+                    pickLocationButton.text = Helpers.stringFromLocation(loc)
                 }
             }
 
@@ -131,7 +134,6 @@ class EventEditFragment(val event : Event?) : Fragment(){
         )
         newEvent.location = location
         MainApp.dataHandler.events.add(newEvent)
-        Toast.makeText(context, "KURVA", Toast.LENGTH_SHORT).show()
     }
 
     private fun editEvent(){
