@@ -13,6 +13,7 @@ class MainApp : Application() {
         lateinit var dataHandler : DataHandler
         lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
+        // Na vice mistech mate ten warning, ze necheckujete permission. Kdyz ji uzivatel zakaze, crashne vam appka (nasimulovano).
         fun getCurrentLocation(callback: (Location) -> Unit) {
             Handler().postDelayed({
                 fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
@@ -26,7 +27,7 @@ class MainApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        appContext = applicationContext
+        appContext = applicationContext     // Application implementuje context, nemusite si ho tu ukladat jeste zvlast, staci pouzit instanci MainApp
         dataHandler = DataHandler(applicationContext)
         dataHandler.loadEvents()
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(appContext)
