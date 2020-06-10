@@ -7,7 +7,8 @@ import com.example.alcoholcounter.ui.events.Event
 import com.google.gson.Gson
 import java.io.*
 
-class DataHandler(private val context: Context){
+// Ja bych si vybral jiny zpusob storage dat, ale o tom uz jsme si povidali
+class DataHandler(private val context: Context){        // Tady to volate s aplikacnim contextem, takze se nic nepokazi, ale vzdycky pozor, abyste si nikdy neukladali context aktivit nekde mimo, jinak to leakne
     private val _fileName : String = "events.txt"
     var events : ArrayList<Event> = ArrayList()
 

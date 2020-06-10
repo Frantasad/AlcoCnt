@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentManager = supportFragmentManager
         fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        // Poslouchejte lint warningy, selectedFragment fakt nemuze byt null
         if (selectedFragment != null) {
             fragmentManager.beginTransaction()
                 .replace(R.id.nav_host_fragment, selectedFragment)
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setActionBarTitle(title: String?) {
-        supportActionBar!!.title = title
+        supportActionBar!!.title = title        // Kdyz bude supportActionBar null -> crash
     }
 
 }

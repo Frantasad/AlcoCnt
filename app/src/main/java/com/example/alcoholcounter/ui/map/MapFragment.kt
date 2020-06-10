@@ -48,6 +48,7 @@ class MapFragment : Fragment(),
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        // Tim, ze pridate view do layoutu, ktery navazete na nejaky context a spusti se, mel by se lifecycle toho view poustet sam. Vam to bez toho nefunguje?
         map_view.onCreate(savedInstanceState)
         map_view.onResume()
         map_view.getMapAsync(this)
@@ -65,7 +66,7 @@ class MapFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).setActionBarTitle(getString(R.string.title_map))
+        (activity as MainActivity).setActionBarTitle(getString(R.string.title_map))     // getActivity() je nullable, tohle je potencialni crash
     }
 
     private fun locationPermissionGranted() : Boolean {
@@ -171,7 +172,7 @@ class MapFragment : Fragment(),
     }
 
     override fun onConnectionSuspended(p0: Int) {
-        TODO("Not yet implemented")
+        TODO("Not yet implemented")     // TODO() funkce crashuje, nemuzete ji nikdy nikde jen tak nechat
     }
 
     override fun onConnectionFailed(p0: ConnectionResult) {
